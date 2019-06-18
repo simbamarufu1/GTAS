@@ -443,9 +443,6 @@
       var exporter = {
         'csv': function () {
             $scope.gridApi.exporter.csvExport('all', 'all');
-        },
-        'pdf': function () {
-            $scope.gridApi.exporter.pdfExport('all', 'all');
         }
       };
 
@@ -629,6 +626,7 @@
               multiSelect: false,
               enableGridMenu: true,
               enableExpandableRowHeader: false,
+              exporterMenuPdf: false,
               expandableRowTemplate: '<div ui-grid="row.entity.subGridOptions"></div>',
               onRegisterApi: function (gridApi) {
                   $scope.gridApi = gridApi;

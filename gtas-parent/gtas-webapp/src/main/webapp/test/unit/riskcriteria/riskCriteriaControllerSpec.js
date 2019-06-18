@@ -79,7 +79,6 @@ describe('RiskCriteriaController:', function() {
       expect(scope.qbGrid.enableSelectAll).toBe(false);
       expect(scope.qbGrid.multiSelect).toBe(false);
       expect(scope.qbGrid.exporterCsvFilename).toBe('rule.csv');
-      expect(scope.qbGrid.exporterPdfHeader).toEqual({text: 'rule', style: 'headerStyle'});
     });
 
 });

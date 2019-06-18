@@ -18,9 +18,6 @@
       var exporter = {
           'csv': function () {
               $scope.gridApi.exporter.csvExport('all', 'all');
-          },
-          'pdf': function () {
-              $scope.gridApi.exporter.pdfExport('all', 'all');
           }
       };
 
@@ -222,6 +219,7 @@
           enableGridMenu: true,
           enableExpandableRowHeader: false,
           exporterCsvFilename: 'Flights.csv',
+          exporterMenuPdf: false,
           expandableRowHeight: 200,
           expandableRowTemplate: '<div ui-grid="row.entity.subGridOptions"></div>',
 

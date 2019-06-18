@@ -397,45 +397,10 @@
               showGridFooter: true,
               multiSelect: false,
               enableGridMenu: true,
-              enableSelectAll: false
+              enableSelectAll: false,
+              exporterMenuPdf: false
             },
             exporterOptions = {
-              exporterPdfDefaultStyle: { fontSize: 9 },
-              exporterPdfTableStyle: { margin: [10, 10, 10, 10] },
-              exporterPdfTableHeaderStyle: {
-                fontSize: 10,
-                bold: true,
-                italics: true
-              },
-              exporterPdfFooter: function(
-                currentPage,
-                pageCount
-              ) {
-                return {
-                  text: pageOfPages(currentPage, pageCount),
-                  style: "footerStyle"
-                };
-              },
-              exporterPdfCustomFormatter: function(
-                docDefinition
-              ) {
-                docDefinition.pageMargins = [0, 40, 0, 40];
-                docDefinition.styles.headerStyle = {
-                  fontSize: 22,
-                  bold: true,
-                  alignment: "center",
-                  lineHeight: 1.5
-                };
-                docDefinition.styles.footerStyle = {
-                  fontSize: 10,
-                  italic: true,
-                  alignment: "center"
-                };
-                return docDefinition;
-              },
-              exporterPdfOrientation: "landscape",
-              exporterPdfPageSize: "LETTER",
-              exporterPdfMaxGridWidth: 600,
               exporterCsvLinkElement: angular.element(
                 document.querySelectorAll(
                   ".custom-csv-link-location"
@@ -464,7 +429,8 @@
                 showGridFooter: true,
                 multiSelect: false,
                 enableGridMenu: true,
-                enableSelectAll: true
+                enableSelectAll: true,
+                exporterMenuPdf: false
               },
               error: {
                 enableRowSelection: true,
@@ -479,7 +445,9 @@
                 showGridFooter: true,
                 multiSelect: false,
                 enableGridMenu: true,
-                enableSelectAll: true
+                enableSelectAll: true,
+                exporterMenuPdf: false
+
               },
               code: {
                 enableRowSelection: true,
@@ -494,7 +462,9 @@
                 showGridFooter: true,
                 multiSelect: false,
                 enableGridMenu: true,
-                enableSelectAll: false
+                enableSelectAll: false,
+                exporterMenuPdf: false
+
               },
               flights: {
                 enableSorting: false,
@@ -508,7 +478,9 @@
                 paginationPageSize: 10,
                 useExternalPagination: true,
                 useExternalSorting: true,
-                useExternalFiltering: true
+                useExternalFiltering: true,
+                exporterMenuPdf: false
+
               },
               passengers: {
                 enableSorting: false,
@@ -522,6 +494,8 @@
                 useExternalPagination: true,
                 useExternalSorting: true,
                 useExternalFiltering: true,
+                exporterMenuPdf: false,
+
                 expandableRowTemplate:
                   '<div ui-grid="row.entity.subGridOptions"></div>'
               },
