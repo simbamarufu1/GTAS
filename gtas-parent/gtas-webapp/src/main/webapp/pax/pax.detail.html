@@ -75,7 +75,11 @@
             </td>
           </tr>
         </table>
-  
+       
+  		 <div class="map-wrapper" ng-if="kibanaSettings.dashboardDisabled == false">
+	  		<iframe id="kibana-map" ng-src="{{paxDetailKibanaUrl}}" height="300" width="340" style="border: none;" ></iframe>
+	  	</div>
+
   <!-- kibana pic here -->
   
       <table class="table table-responsive table-condensed table-borderless">
@@ -961,6 +965,47 @@
             </md-tab-body>
             </md-tab>
   
+            <!-- Link Analysis Tab -->
+            <md-tab label="Link Analysis">
+              <md-tab-body>
+                <div class="flex flex-vert ie-fix-md full-width align-items-center scroll-container-outer">
+                <!-- SEARCH  -->
+                <div class="cbp-card-container full-width">
+                    <div class="cbp-card cbp-card-shadow">
+                      <h4 class="h-label no-margin-top" >Search</h4>
+                      <div class="flex flex-center">
+                      <div class="no-pad-top panel-body flex flex-vert flex-15 ie-fix-md">
+                        <div class="padding-1">
+                          <button type="button" class="btn btn-info" ng-click="getGraph1()" style="width:140px;">
+                              <i class="fa fa-2x fa-user-circle float-left"></i>&nbsp;&nbsp;&nbsp;Co-Travelers
+                          </button>
+                        </div>
+                        <div class="padding-1">
+                          <button type="button" class="btn btn-info" ng-click="getGraph2()" style="width:140px;">
+                              <i class="fa fa-plane float-left"></i>&nbsp;&nbsp;&nbsp;Flights
+                          </button>
+                        </div>
+                        <div class="padding-1">
+                          <button type="button" class="btn btn-info" ng-click="getGraph3()" style="width:140px;">
+                              <i class="fa fa-map-signs float-left"></i>&nbsp;&nbsp;&nbsp;Destinations
+                          </button>
+                        </div>
+                        <div class="padding-1">
+                          <button type="button" class="btn btn-info" ng-click="getGraph4()" style="width:140px;">
+                              <i class="fa fa-bar-chart float-left"></i>&nbsp;&nbsp;&nbsp;Demographics
+                          </button>
+                        </div>
+                      </div>
+
+                      <!-- GRAPH -->
+                      <div id="vis" class="flex-75 margin-1" style="max-height: 500px; border: 1px solid">
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+              </div>
+            </md-tab-body>
+            </md-tab>
   
           </md-tabs>
           <!-- END - TABS AND CONTENT -->

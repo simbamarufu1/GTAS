@@ -6,7 +6,7 @@
 (function () {
   'use strict';
   ////     PAX DETAIL CONTROLLER     //////////////
-  app.controller('PassengerDetailCtrl', function ($scope, $mdDialog,$mdSidenav,$timeout, passenger, $mdToast, spinnerService, user,caseHistory,ruleCats, ruleHits, watchlistLinks, paxDetailService, caseService, watchListService, codeTooltipService) {
+  app.controller('PassengerDetailCtrl', function ($scope, $mdDialog,$mdSidenav,$timeout, passenger, $mdToast, spinnerService, user,caseHistory,ruleCats, ruleHits, watchlistLinks, paxDetailService, caseService, watchListService, codeTooltipService, $sce) {
       $scope.passenger = passenger.data;
       $scope.watchlistLinks = watchlistLinks.data;
       $scope.isLoadingFlightHistory = true;
@@ -17,7 +17,80 @@
       $scope.ruleCats=ruleCats.data;
       $scope.slides = [];
       $scope.jsonData = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify($scope.passenger));
-      
+      $scope.paxDetailKibanaUrl = $sce.trustAsResourceUrl($scope.kibanaSettings.host+ "/app/kibana#/visualize/edit/29ac1380-66a9-11e9-9ffd-9d63a89be4bb?embed=true&_g=()&_a=(query:(query_string:(analyze_wildcard:!t,query:'flightId:"+ $scope.passenger.flightId +" AND passengerId:"+ $scope.passenger.paxId +"')))");
+
+
+      //test config for local. TODO - push to external config
+      $scope.config = {
+        container_id: "vis",
+        server_url: "bolt://localhost:7687",
+        server_user: "",
+        server_password: "",
+      };
+
+      // dummy for passenger, UPDATE vo with id_tag
+      $scope.getGraph1 = function(){
+        var viz = document.getElementById('vis');
+
+        var config1 = $scope.config;
+        config1.initial_cypher = "MATCH (n:Passenger {id_tag: '3b6818350584a3b90adc1903ba28dfe3a2d09a51'}) OPTIONAL MATCH (d:Document)<--(n) RETURN n, d";
+
+        viz = new NeoVis.default(config1);
+        viz.render();
+      }
+
+      // dummy for airport, needs filtering
+      $scope.getGraph2 = function(){
+        var viz = document.getElementById('vis');
+
+        var config1 = $scope.config;
+        config1.initial_cypher = "match (airportDest:Airport{airport_code:'IAD'})<--(:Flight) " +
+        "with airportDest " +
+        "match (airportOrig:Airport)-->(:Flight) " +
+        "return (airportDest)<--(:Flight)<--(airportOrig) LIMIT 25 ";
+
+        config1.labels = {
+          "Airport": {
+            "caption": "airport_code",
+            "size": "id",
+            "community": "id",
+            "background": "#00FC8D",
+            "color": "#A5ABB6",
+          }
+        }
+
+        viz = new NeoVis.default(config1);
+        viz.render();
+      }
+
+      // dummy for co-travelers, UPDATE vo with tag
+      // will pull for all flight history unless we also match on the flight id
+      $scope.getGraph3 = function(){
+        var viz = document.getElementById('vis');
+
+        var config1 = $scope.config;
+        config1.initial_cypher = "match (passenger1:Passenger{id_tag:'fb501be03013c09653d1a3902aba226eeb7c4409'}) -[r1]->(:Flight) " +
+        "with r1, passenger1 " +
+        "match (passenger2:Passenger) -[r2]->(:Flight) " +
+        "where r1.pnr_record_locator=r2.pnr_record_locator AND NOT passenger1=passenger2 " +
+        "return (passenger1)-[r1]->(:Flight)<-[r2]-(passenger2)";
+
+        viz = new NeoVis.default(config1);
+          viz.render();
+       }
+
+       // dummy for address
+      $scope.getGraph4 = function(){
+        var viz = document.getElementById('vis');
+
+        var config1 = $scope.config;
+        config1.initial_cypher = "MATCH (n:Address) RETURN n LIMIT 25";
+
+        console.log(config1);
+          viz = new NeoVis.default(config1);
+          viz.render();
+      }
+
       $scope.getAttachment = function(paxId){
         //TO-DO add specific pax-id here to grab from current passenger
         paxDetailService.getPaxAttachments(paxId).then(function(data){
@@ -443,6 +516,9 @@
       var exporter = {
         'csv': function () {
             $scope.gridApi.exporter.csvExport('all', 'all');
+        },
+        'pdf': function () {
+            $scope.gridApi.exporter.pdfExport('all', 'all');
         }
       };
 
@@ -626,7 +702,6 @@
               multiSelect: false,
               enableGridMenu: true,
               enableExpandableRowHeader: false,
-              exporterMenuPdf: false,
               expandableRowTemplate: '<div ui-grid="row.entity.subGridOptions"></div>',
               onRegisterApi: function (gridApi) {
                   $scope.gridApi = gridApi;
