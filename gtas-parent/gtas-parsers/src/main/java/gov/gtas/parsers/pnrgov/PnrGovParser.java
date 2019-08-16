@@ -60,6 +60,8 @@ public final class PnrGovParser extends EdifactParser<PnrVo> {
     private void processGroup1_PnrStart(TVL_L0 tvl_l0) throws ParseException {
     	parsedMessage.setPrimeFlight(tvl_l0);
         parsedMessage.setCarrier(tvl_l0.getCarrier());
+        // Set default origin in case we are unable to read the TVL5 value.
+        // Will be overwritten by the origin of the first valid TVL5 rec. 
         parsedMessage.setOrigin(tvl_l0.getOrigin());
         parsedMessage.setDepartureDate(tvl_l0.getEtd());
         /*
@@ -122,15 +124,19 @@ public final class PnrGovParser extends EdifactParser<PnrVo> {
             processGroup2_Passenger(tif);
         }
 
+        boolean isFirstLeg = true;
         for (;;) {
             TVL tvl = getConditionalSegment(TVL.class);
             if (tvl == null) {
                 break;
             }
             if(validTvl(tvl)) {
-            	processGroup5_Flight(tvl);
+              if (isFirstLeg) {
+                parsedMessage.setOrigin(tvl.getOrigin());
+                isFirstLeg = false;
+              }
+              processGroup5_Flight(tvl);
             }
-            
         }
 
         for (;;) {
@@ -398,6 +404,7 @@ public final class PnrGovParser extends EdifactParser<PnrVo> {
             }
         }
         
+        // can't handle repeat segments?
         IFT ift = getConditionalSegment(IFT.class);
         if (ift != null) {
             if (CollectionUtils.isNotEmpty(newCreditCards) && ift.isSponsorInfo()) {
@@ -860,9 +867,7 @@ private void generateBagVos(TBD tbd, TVL tvl, PassengerVo currentPassenger, Flig
             	 if(StringUtils.isNotBlank(txt) && txt.startsWith(IFT.CONTACT_EMAIL)){
             		 extractEmailInfo(txt);
             	 }
-             	
              }
-        	
         }
     }
    
@@ -994,6 +999,7 @@ private void generateBagVos(TBD tbd, TVL tvl, PassengerVo currentPassenger, Flig
                 phone.setNumber(tmp);
                 parsedMessage.getPhoneNumbers().add(phone);
             }
+            // TODO - IFT.CONTACT_CITY code corresponds to Travel Agent Phone - needs fix.
             if(txt.contains(IFT.CONTACT_CITY)){
             	String[] tmpArray=getAgencyInfo(txt);
             	AgencyVo a=new AgencyVo();
@@ -1070,7 +1076,7 @@ private void generateBagVos(TBD tbd, TVL tvl, PassengerVo currentPassenger, Flig
         if(StringUtils.isNotBlank(address.getEmail())){
             String tmp = getRawEmailString(address.getEmail());
             String email = processSpecialCharactersForLTSAndADD(tmp);
-            addEmailVoToMessage(email);
+            extractEmailInfo(email);
         }
     }
     

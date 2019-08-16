@@ -13,6 +13,8 @@ import org.junit.Test;
 
 import gov.gtas.parsers.edifact.EdifactParser;
 import gov.gtas.parsers.exception.ParseException;
+import gov.gtas.parsers.vo.AddressVo;
+import gov.gtas.parsers.vo.CreditCardVo;
 import gov.gtas.parsers.vo.PnrVo;
 
 import java.io.IOException;
@@ -36,12 +38,88 @@ public class PnrGovParserTest implements ParserTestHelper {
     private static final String PNR_ADD_CTCM = "/pnr-messages/pnrAddressPhoneCTCM.txt";
     private static final String PNR_SEAT_NSST = "/pnr-messages/pnrSeatFormats.txt";
     private static final String failingMessage1 = "/pnr-messages/failingMessage1.txt";
+    private static final String PNR_EMAIL_ADDY = "/pnr-messages/pnrEmailAddress.txt";
 
     private EdifactParser<PnrVo> parser;
 
     @Before
     public void setUp() {
         this.parser = new PnrGovParser();
+    }
+
+    @Test
+    public void sevenEmailsFoundTest() throws ParseException, IOException, URISyntaxException {
+      String msg = getMessageText(PNR_EMAIL_ADDY);
+      PnrVo vo = this.parser.parse(msg);
+      assertTrue(vo.getEmails().size() == 7);
+    }
+
+    @Test
+    public void threeAddressesFoundTest() throws ParseException, IOException, URISyntaxException {
+      //Two in AddressVO, one in CreditCard
+      String msg = getMessageText(PNR_EMAIL_ADDY);
+      PnrVo vo = this.parser.parse(msg);
+
+      assertTrue(vo.getAddresses().size() == 2);
+      assertTrue(vo.getCreditCards().size() == 1);
+      assertNotNull(vo.getCreditCards().get(0).getAccountHolderAddress());
+
+      AddressVo addr = vo.getAddresses().get(1);
+      assertEquals("DURHAM", addr.getCity());
+      assertEquals("GB", addr.getCountry());
+      assertEquals("45 GRP2 ADDRESSINFO STREET", addr.getLine1());
+      assertEquals("00439965035", addr.getPhoneNumber());
+      assertEquals("PD34A", addr.getPostalCode());
+      assertEquals("BARKING", addr.getState());
+      assertEquals("BAR", addr.getStateProvinceName());
+      assertEquals("LOC", addr.getLocation());
+      assertEquals("702", addr.getType());
+
+      CreditCardVo cc = vo.getCreditCards().get(0);
+      assertEquals("2234 GROUP4 SPONSOR STREET ATLANTA, GA 30067", cc.getAccountHolderAddress());
+      assertEquals("7705632891", cc.getAccountHolderPhone());
+      assertEquals("AX", cc.getCardType());
+      assertEquals("GR4PAYMENT SPONSORINFO", cc.getAccountHolder());
+      assertEquals("372395XXXXX1798", cc.getNumber());
+    }
+
+    @Test
+    public void threePhoneNumbersFoundTest() throws ParseException, IOException, URISyntaxException {
+      String msg = getMessageText(PNR_EMAIL_ADDY);
+      PnrVo vo = this.parser.parse(msg);
+      assertTrue(vo.getPhoneNumbers().size() == 2);
+      assertTrue(vo.getCreditCards().size() == 1);
+
+      assertEquals(vo.getPhoneNumbers().get(0).getNumber(), "00441753637285");
+      assertEquals(vo.getPhoneNumbers().get(1).getNumber(), "00439965035");
+
+      CreditCardVo cc = vo.getCreditCards().get(0);
+      assertEquals("7705632891", cc.getAccountHolderPhone());
+    }
+
+    @Test
+    public void IFTEmailsTest() throws ParseException, IOException, URISyntaxException {
+      String msg = getMessageText(PNR_EMAIL_ADDY);
+      PnrVo vo = this.parser.parse(msg);
+      assertTrue(vo.getPhoneNumbers().size() == 2);
+      assertTrue(vo.getCreditCards().size() == 1);
+
+      assertEquals(vo.getPhoneNumbers().get(0).getNumber(), "00441753637285");
+      assertEquals(vo.getPhoneNumbers().get(1).getNumber(), "00439965035");
+
+      CreditCardVo cc = vo.getCreditCards().get(0);
+      assertEquals("7705632891", cc.getAccountHolderPhone());
+    }
+
+
+    // PNR origin should equal the TVL5 origin, not the TVL0 origin for
+    // a multi-leg trip
+    @Test
+    public void PnrOriginTest() throws ParseException, IOException, URISyntaxException {
+      String msg = getMessageText(PNR_EXAMPLE);
+      PnrVo vo = this.parser.parse(msg);
+
+      assertEquals(vo.getOrigin(), "WDH");
     }
 
     /*

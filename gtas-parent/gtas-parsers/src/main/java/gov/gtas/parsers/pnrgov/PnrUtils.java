@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import gov.gtas.parsers.exception.ParseRuntimeException;
+import gov.gtas.parsers.pnrgov.enums.*;
 import gov.gtas.parsers.pnrgov.segment.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -183,6 +184,8 @@ public class PnrUtils {
         rv.setPostalCode(add.getPostalCode());
         rv.setPhoneNumber(ParseUtils.prepTelephoneNumber(add.getTelephone()));
         rv.setEmail(add.getEmail());
+        rv.setLocation(add.getLocation());
+        rv.setStateProvinceName(add.getStateOrProvinceName());
         return rv;
     }
 
@@ -419,6 +422,114 @@ public class PnrUtils {
             }
         }
         return temp;
+    }
+
+    /**
+     * Format test for a single AIRIMP formatted email.
+     * returns true if it has exactly 1 "//", has no special chars except "-" and ".",
+     * has a "." somewhere after the "//",
+     * and the final 2 chars are Unicode text. 
+     */
+    public static boolean isAirimpEmail(String rawemail) {
+      if (StringUtils.isBlank(rawemail)) return false;
+
+      String unicodeEmailRegex = "^[^/<>!@#&%$:;,?*()_+=^~`|\'\" ]+\\/\\/[^/<>!@#&%$:;,?*()_+=^~`|\'\" ]+[.]{1}[^/<>!@#&%$:;,?*()_+=^~`|\'\" 0123456789]{2,}$";
+      Pattern emailpattern = Pattern.compile(unicodeEmailRegex);
+      Matcher match = emailpattern.matcher(rawemail.trim());
+
+      return match.find();
+    }
+
+    // // Need positive test that excludes other formats where possible
+    // public static boolean isPossiblePhone(String raw) {
+    //   if (StringUtils.isBlank(raw)) return false;
+
+        // test for phone
+    //   return true;
+    // }
+
+    /**
+     * Decodes AIRIMP encoded email strings. Will produce unreliable results
+     * for real emails with consecutive underscores and periods since AIRIMP converts
+     * underscores to double-periods, "..".
+     * @param email - raw AIRIMP encoded email text (no additional segment data)
+     * @return returns the decoded email text or the original string if
+     * it was not AIRIMP encoded.
+     */
+    public static String decodeAirimpEmail(String raw) {
+      if (!isAirimpEmail(raw)) return raw;
+
+      return raw.replace("//", "@").replace("..", "_").trim();
+    }
+
+    // return the decoded email from a raw string
+    // Find code CTC or CTCE followed by an AIRIMP formmated email string, return the email.
+    // Returns the first found, should we expect multiple? eg: "YY CTCE EMAIL//ONE.COM CTCE EMAIL//TWO.COM"
+    public static String extractEmailByCode(String raw) {
+      if (StringUtils.isEmpty(raw)) return null;
+
+      String[] encodedArray = raw.split(" ");
+      boolean valid = false;
+      String result = null;
+      int emailElements = 1;
+
+      // if we find an acceptable code, the email data should be in the next 1 or 2 elements.
+      // Shd parameterize the location per spec version.
+      // Limiting it for now to prevent false positives, but we may ultimately need to search the entire array.
+      for (String text : encodedArray) {
+        if (valid && emailElements <= 2) {
+          if (isAirimpEmail(text)) {
+            result = decodeAirimpEmail(text);
+            break;
+          }
+          emailElements++;
+        }
+        if (FreetextCodes.isEmailOrCtcCode(text)) {
+          valid = true;
+        }
+
+      }
+      return result;
+    }
+
+    // Works for strings with a leading CTC phone code.
+    // if we find an acceptable code, return all text after it.
+    // If no code is found, return the original text.
+    // If a code for another data type is found, return null.
+    // TODO - need a fixed set of positions to search where possible to prevent false positives
+    // TODO - refac. Extract fxn to parse for known codes, return relevant substring?
+    public static String extractPhoneByCodeOrRaw(String phonetext) {
+      if (StringUtils.isEmpty(phonetext)) return null;
+
+      String[] textArray = phonetext.trim().split(" ");
+      String phonecode = null;
+      String result = null;
+      boolean isOtherCode = false;
+
+      for (String text : textArray) {
+        if (FreetextCodes.isPhoneOrCtcCode(text)) {
+          phonecode = text;
+          break;
+        }
+        else if (FreetextCodes.isContactCode(text)) {
+          //is a non-phone CTC code.
+          isOtherCode = true;
+          break;
+        }
+      }
+
+      if (isOtherCode) {
+        result = null;
+      }
+      else if (phonecode == null) {
+        result = phonetext;
+      }
+      else {
+        //refac
+        int idx = phonetext.indexOf(phonecode) + phonecode.length() + 1;
+        result = isAirimpEmail(phonetext.substring(idx)) ? null : phonetext.substring(idx);
+      }
+      return result;
     }
 
     private static void setPassengerDob(PassengerVo p, String d) {

@@ -20,7 +20,9 @@ public class AddressVo implements Validatable {
     private String postalCode;
     private String phoneNumber;
     private String email;
-    
+    private String location;
+    private String stateProvinceName;
+    private String freeText;
     
     
     public String getEmail() {
@@ -83,6 +85,24 @@ public class AddressVo implements Validatable {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+    public String getLocation() {
+      return location;
+  }
+  public void setLocation(String data) {
+      location = data;
+  }
+  public String getStateProvinceName() {
+    return stateProvinceName;
+  }
+  public void setStateProvinceName(String data) {
+    stateProvinceName = data;
+  }
+  public String getFreeText() {
+    return freeText;
+  }
+  public void setFreeText(String data) {
+    freeText = data;
+  }
 
     @Override
     public boolean isValid() {

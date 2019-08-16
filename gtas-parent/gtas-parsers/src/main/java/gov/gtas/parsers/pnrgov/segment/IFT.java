@@ -33,8 +33,15 @@ public class IFT extends Segment {
     public static final String CONTACT_EMAIL = "CTCE";
     public static final String CONTACT_ADDR = "CTCA";
     public static final String CONTACT = "CTC";
+    // TODO correct this. CTCT = travel agent contact type. Fix ref in parser.
     public static final String CONTACT_CITY = "CTCT";
-    
+
+    // Freetext Information Type codes, code #9980 in the PNR specs
+    // NOTE There are ~100 types, but we are currently recognizing only 3
+    public static final String FARE_CALC = "15";
+    public static final String OSI_DATA = "28";
+    public static final String SPONSOR_INFO = "43";
+
     private String iftCode;
     
     /** A code describing data in message */
@@ -57,29 +64,29 @@ public class IFT extends Segment {
     private String emailText;
     
     public IFT(List<Composite> composites) {
-        super(IFT.class.getSimpleName(), composites);
+      super(IFT.class.getSimpleName(), composites);
 
-        Composite c = getComposite(0);
-       
+      Composite c = getComposite(0);
+      
+      if (c == null) return;
+
+      this.iftCode = c.getElement(0);
+      this.freetextType = c.getElement(1);
+      this.pricingIndicator = c.getElement(2);
+      this.airline = c.getElement(3);
+      this.freeTextLanguageCode = c.getElement(4);
+      // IFT+4:28+AM CTCP BOG 571 600 5820 A PBX* 30067+770 5632891'
+      //email address #330 fix//if format is IFT+CTCE SOME.MCCLAUGHRY//GMAIL.COM
+      if(numComposites() == 1){
+        c = getComposite(0);
+        messages.add(c.getElement(0));
+      }
+      for (int i=1; i<numComposites(); i++) {
+        c = getComposite(i);
         if (c != null) {
-            this.iftCode = c.getElement(0);
-            this.freetextType = c.getElement(1);
-            this.pricingIndicator = c.getElement(2);
-            this.airline = c.getElement(3);
-            this.freeTextLanguageCode = c.getElement(4);
-            // IFT+4:28+AM CTCP BOG 571 600 5820 A PBX* 30067+770 5632891'
-            //email address #330 fix//if format is IFT+CTCE SOME.MCCLAUGHRY//GMAIL.COM
-            if(numComposites() == 1){
-            	c = getComposite(0);
-            	messages.add(c.getElement(0));
-            }
-            for (int i=1; i<numComposites(); i++) {
-            	c = getComposite(i);
-            	if (c != null) {
-            		messages.add(c.getElement(0));
-                }
-            }
-        }
+          messages.add(c.getElement(0));
+          }
+      }
     }
 
     public String getIftCode() {
@@ -107,12 +114,16 @@ public class IFT extends Segment {
     }
     
     public boolean isSponsorInfo() {
-        return "4".equals(this.iftCode) && "43".equals(this.freetextType);
+      return freetextType.equals(SPONSOR_INFO);
     }
     
     public boolean isOtherServiceInfo() {
-        return "4".equals(this.iftCode) && "28".equals(this.freetextType);
+      return freetextType.equals(OSI_DATA);
     }
+    
+  public boolean isFareCalculation() {
+    return freetextType.equals(FARE_CALC);
+  }
     
 	public String getEmailText() {
 		return emailText;
