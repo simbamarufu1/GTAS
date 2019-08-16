@@ -59,11 +59,9 @@ public final class PnrGovParser extends EdifactParser<PnrVo> {
      */
     private void processGroup1_PnrStart(TVL_L0 tvl_l0) throws ParseException {
     	parsedMessage.setPrimeFlight(tvl_l0);
-        parsedMessage.setCarrier(tvl_l0.getCarrier());
-        // Set default origin in case we are unable to read the TVL5 value.
-        // Will be overwritten by the origin of the first valid TVL5 rec. 
-        parsedMessage.setOrigin(tvl_l0.getOrigin());
-        parsedMessage.setDepartureDate(tvl_l0.getEtd());
+      parsedMessage.setCarrier(tvl_l0.getCarrier());
+      // parsedMessage.setOrigin(tvl_l0.getOrigin());
+      parsedMessage.setDepartureDate(tvl_l0.getEtd());
         /*
         * RCI is mandatory but commonly not included in PNR. Because of this we have loosened the parser to accept it
         * as a conditional field.
