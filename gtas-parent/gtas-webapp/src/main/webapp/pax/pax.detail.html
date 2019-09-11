@@ -1083,7 +1083,244 @@
                 </div>
               </md-tab-body>
               </md-tab>
-    
+              
+              
+    		<!-- Cases Tab -->
+    		<md-tab label="Cases" ng-if=true> <md-tab-body>
+    		
+    		
+    				<div class="cbp-card-container full-width">
+						<div class="cbp-card cbp-card-shadow">
+							<h4 class="h-label no-margin-top">Current Case #12345678
+								Created: XX/XX/XXXX</h4>
+							<div
+								class="flex flex-center sm-pad scroll-container-outer ng-scope">
+								<div class="no-pad-top panel-body flex ie-fix-md half-width">
+
+									<!-- Person Info -->
+									<div class="switch-width-sm-half min-half-height right-border-grey">
+										<div
+											class="flex flex-vert align-items-center full-height quarter-width">
+											<div class="md-margin">
+												<div class="flex flex-vert sm-pad-span txt-center">
+													<span> <strong>FIRSTNAME LASTNAME</strong>
+													</span> <span name="dob"> <strong>DOB:</strong> XX/XX/XXXX
+													</span> <span name="nationality"> <strong>Nationality:</strong>
+														NATIONALITY
+													</span> <span name="nationality"> <strong>Passport:</strong>
+														XXXX-XXXX-XXXX
+													</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!-- DOCUMENT INFO -->
+								<div
+									class="flex flex-vert ie-fix-md half-width align-items-center">
+									<div class="full-width cbp-card-container">
+										<div class="cbp-card cbp-card-shadow">
+											<h4 class="h-label no-margin-top">Documents</h4>
+											<div class="no-pad-top panel-body flex flex-vert ie-fix-md">
+												<table aria-hidden="true"
+													class="table table-condensed table-responsive margin-0 floating-table-header">
+													<thead>
+														<tr>
+															<th>Doc #</th>
+															<th>Type</th>
+															<th>Iss. Country</th>
+															<th>Exp. Date</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr ng-repeat="doc in passenger.documents">
+															<td>{{doc.documentNumber}}</td>
+															<td><span ng-mouseleave="resetTooltip()">{{
+																	doc.documentType }} <md-tooltip class="multi-tooltip"
+																		md-direction="bottom">
+																	<div>{{getCodeTooltipData(doc.documentType,"document")}}</div>
+																	</md-tooltip>
+															</span></td>
+															<td><span ng-mouseleave="resetTooltip()"><strong>
+																		{{ doc.issuanceCountry }}</strong> <md-tooltip
+																		class="multi-tooltip" md-direction="bottom">
+																	<div>{{getCodeTooltipData(doc.issuanceCountry,"country")}}</div>
+																	</md-tooltip> </span></td>
+															<td>{{doc.expirationDate}}</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+
+									<!-- WATCHLIST/MISCELLANEOUS PORTION -->
+									<div class="full-width cbp-card-container">
+										<div class="cbp-card cbp-card-shadow">
+											<h4 class="h-label no-margin-top">
+												Watchlist Matches
+												<button ng-click="saveWatchListMatchByPaxId()" type="button"
+													class="btn btn-icon-only btn-primary">
+													<i class="fa fa-inverse fa-refresh"></i>
+												</button>
+											</h4>
+											<div class="no-pad-top panel-body flex flex-vert ie-fix-md">
+												<table aria-hidden="true"
+													class="table table-condensed table-responsive margin-0 floating-table-header">
+													<thead>
+														<tr>
+															<th>First Name</th>
+															<th>Last Name</th>
+															<th>DOB</th>
+															<th>% Match</th>
+															<th>Verified</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr
+															ng-repeat="watch in watchlistLinks | orderBy:'-percentMatch'">
+															<td>{{watch.watchListFirstName}}</td>
+															<td>{{watch.watchListLastName}}</td>
+															<td>{{watch.watchListDOB}}</td>
+															<td>{{watch.percentMatch | percent}}</td>
+															<td>{{watch.verifiedStatus?"Yes":"No"}}</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="cbp-card-container full-width">
+						<div class="cbp-card cbp-card-shadow">
+							<h4 class="h-label no-margin-top">Case Management</h4>
+								<div class="flex flex-center sm-pad scroll-container-outer">
+									<!-- RULE HIT DETAILS -->
+									<div class="cbp-card-container" style="width:33%;">
+									<div class="cbp-card cbp-card-shadow">
+										<h4 class="h-label no-margin-top">Rule Hit Details</h4>
+										<div class="panel-body flex flex-vert ie-fix-md three-table"
+											style="overflow: auto;">
+											<table aria-hidden="true"
+												class="cbp-table-selectable mdl-js-data-table floating-table-header">
+												<thead align="left">
+													<tr>
+														<th align="text-right">Rule Category</th>
+														<th style="padding-left: 1px; padding-right: 10px;"
+															class="text-left">Description</th>
+														<th class="text-left">Status</th>
+													</tr>
+												</thead>
+											</table>
+											<div class="floating-table-body">
+												<table class="cbp-table-selectable mdl-js-data-table">
+													<tbody>
+														<tr ng-click="sideNav('comments',$index)">
+															<td style="padding-left: 5px; padding-right: 1px;">TEST
+																CATEGORY</td>
+															<td style="padding-left: 1px; padding-right: 10px;">TEST
+																DESCRIPTION</td>
+															<td style="padding-left: 10px; padding-right: 10px;"
+																align="text-right">THIS IS A HIT STATUS</td>
+														</tr>
+
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+									</div>
+
+									<!-- CASE COMMENT/STATUS CONTROL -->
+									<div class="cbp-card-container" style="width:33%;">
+									<div class="cbp-card cbp-card-shadow">
+										<h4 class="h-label no-margin-top">Case Status And
+											Comments</h4>
+										<div class="panel-body flex flex-vert ie-fix-md three-table"
+											style="overflow: auto;">
+											<table aria-hidden="true"
+												class="cbp-table-selectable mdl-js-data-table floating-table-header">
+												<thead align="left">
+													<tr>
+														<th align="text-right">Case Comments</th>
+													</tr>
+												</thead>
+											</table>
+											<div class="floating-table-body">
+												<table class="cbp-table-selectable mdl-js-data-table">
+													<tbody>
+														<tr ng-click="sideNavGeneralComments()">
+															<td style="padding-left: 50px; padding-right: 1px;">General
+																Comments</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+
+											<div>
+												<form name="caseForm" ng-submit="caseConfirm()"
+													class="flex flex-vert">
+													<div
+														class="mdl-selectfield mdl-js-selectfield mdl-selectfield--full-width">
+														<select class="mdl-selectfield__select" id="case-status"
+															ng-change="updateOnStatusChange()"
+															ng-model="caseDispStatus">
+															<option ng-repeat="item in caseDispositionStatuses"
+																value="{{item.name}}">{{item.name}}</option>
+														</select> <label class="mdl-textfield__label static-label"
+															for="case-status"><strong>Case Status</strong></label>
+													</div>
+											</div>
+										</div>
+									</div>
+									</div>
+
+									<!-- CASE SAVE/ONE DAY -->
+									<div class="cbp-card-container" style="width:33%;">
+									<div class="cbp-card cbp-card-shadow">
+										<h4 class="h-label no-margin-top">Save Changes/One Day
+											Lookout</h4>
+											<div class="panel-body flex flex-vert ie-fix-md three-table"
+												style="overflow: auto;">
+												<span name="saveConfirmation"> {{ saveConfirmation }}
+												</span>
+											<button class="btn btn-primary" type="submit">Save</button>
+
+											</form>
+
+											<md-button ng-click="addToOneDayLookoutList(caseItem.id)"
+												ng-disabled="isAddOLKButtonDisabled" class="btn btn-default">
+											<md-tooltip>Add to One Day Lookout List</md-tooltip> <i
+												aria-hidden="true"></i> &nbsp;<Strong>Add to One
+												Day Lookout</Strong> </md-button>
+											<br />
+											<md-button
+												ng-click="removeFromOneDayLookoutList(caseItem.id)"
+												ng-disabled="isRemoveOLKButtonDisabled"
+												class="btn btn-default"> <md-tooltip>Remove
+											from One Day Lookout List</md-tooltip> <i aria-hidden="true"></i> &nbsp;<Strong>Remove
+												from One Day Lookout</Strong> </md-button>
+										</div>
+									</div>
+								</div>
+						</div>
+					</div>
+					</div>
+
+				</div>
+				</md-tab-body> 
+				</md-tab>
+    		</md-tab-body>
+    		</md-tab>
+    		
             </md-tabs>
             <!-- END - TABS AND CONTENT -->
     
