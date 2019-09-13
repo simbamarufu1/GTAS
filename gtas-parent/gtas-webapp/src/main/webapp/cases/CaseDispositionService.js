@@ -102,6 +102,19 @@
                 return dfd.promise;
             }
 
+            function getPassengerCase(paxId){
+                var dfd = $q.defer();
+                dfd.resolve($http({
+                    method: 'get',
+                    url: "/gtas/case/",
+                    params: {
+                        paxId:paxId
+                    }
+                }));
+                return dfd.promise;
+            }
+
+
             function getByQueryParams(model){
                 var param = {
                     pageSize: "10",
@@ -344,6 +357,7 @@
                 getCaseDisposition: getCaseDisposition,
                 getAllCases: getAllCases,
                 getOneHitsDisposition: getOneHitsDisposition,
+                getPassengerCase: getPassengerCase,
                 getRuleCats: getRuleCats,
                 updateHitsDisposition: updateHitsDisposition,
                 addToOneDayLookout: addToOneDayLookout,

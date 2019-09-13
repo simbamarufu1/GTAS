@@ -16,6 +16,7 @@
     "angular-translate-loader-url": "^2.9.1",
     "angular-translate-storage-cookie": "^2.9.1",
     "angular-trix": "^1.0.2",
+    "angular-ui-carousel": "^0.1.10",
     "angular-ui-grid": "4.8.1",
     "angular-ui-router": "^1.0.8",
     "awesome-bootstrap-checkbox": "^0.3.0",

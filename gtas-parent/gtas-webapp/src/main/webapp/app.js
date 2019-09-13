@@ -577,6 +577,9 @@ var app;
                         },
                         watchlistLinks: function(paxDetailService, $stateParams){
                           return paxDetailService.getPaxWatchlistLink($stateParams.paxId)
+                            },
+                        passengerCase : function(caseDispositionService, $stateParams){
+                            return caseDispositionService.getPassengerCase($stateParams.paxId);
                         }
                     }
                 })

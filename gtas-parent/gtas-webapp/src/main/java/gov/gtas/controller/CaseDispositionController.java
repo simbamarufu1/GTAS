@@ -6,8 +6,6 @@
 package gov.gtas.controller;
 
 
-import gov.gtas.model.Role;
-import gov.gtas.model.User;
 import gov.gtas.services.dto.CaseCommentRequestDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -110,6 +108,22 @@ public class CaseDispositionController {
         return res;
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/case")
+    @ResponseBody
+    @ResponseStatus(HttpStatus.OK)
+    CaseVo getPaxCase(@RequestParam("paxId") String paxId) {
+        // Technically the data model allows for multiple cases.
+        // In actuality we expect to *only* have a list of one case, ever.
+        // Because our data model allows for it we code around having mulitple cases.
+        List<Case> aCaseList = caseDispositionService.caseWithCommentsAndHitDispositionsByPaxId(Long.parseLong(paxId));
+        CaseVo aCaseVo;
+        if (!aCaseList.isEmpty()) {
+            aCaseVo = CaseVo.from(aCaseList.get(0));
+        } else {
+            aCaseVo = new CaseVo();
+        }
+        return aCaseVo;
+    }
 
     //getHistDispComments
     @RequestMapping(method = RequestMethod.GET, value = "/getHistDispComments")

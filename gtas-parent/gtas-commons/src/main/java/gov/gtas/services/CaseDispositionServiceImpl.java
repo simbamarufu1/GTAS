@@ -723,19 +723,7 @@ public class CaseDispositionServiceImpl implements CaseDispositionService {
     public CasePageDto findHitsDispositionByCriteria(CaseRequestDto dto) {
         Case aCase = caseDispositionRepository.caseWithCommentsAndHitDispositionsById(dto.getCaseId());
         List<CaseVo> vos = new ArrayList<>();
-        CaseVo vo = new CaseVo();
-        vo.setHitsDispositions(aCase.getHitsDispositions());
-        aCase.getFlight().setPnrs(null);
-        aCase.getFlight().setApis(null);
-        aCase.getFlight().setAddress(null);
-        aCase.getFlight().setBags(null);
-        aCase.getFlight().setCreditCard(null);
-        aCase.getFlight().setPhone(null);
-        aCase.getFlight().setBookingDetails(null);
-        vo.setHitsDispositionVos(returnHitsDisposition(aCase.getHitsDispositions()));
-        vo.setGeneralCaseCommentVos(convertCommentsToVo(aCase.getCaseComments()));
-        CaseDispositionServiceImpl.copyIgnoringNullValues(aCase, vo);
-        manageHitsDispositionCommentsAttachments(vo.getHitsDispositions());
+        CaseVo vo = CaseVo.from(aCase);
         vos.add(vo);
         return new CasePageDto(vos, 1L);
     }
@@ -832,79 +820,7 @@ public class CaseDispositionServiceImpl implements CaseDispositionService {
      * @param _tempHitsDispositionSet
      * @return
      */
-    private Set<HitsDispositionVo> returnHitsDisposition(Set<HitsDisposition> _tempHitsDispositionSet) {
 
-        Set<HitsDispositionVo> _tempReturnHitsDispSet = new HashSet<HitsDispositionVo>();
-        Set<RuleCat> _tempRuleCatSet = new HashSet<RuleCat>();
-        HitsDispositionVo _tempHitsDisp = new HitsDispositionVo();
-        RuleCat _tempRuleCat = new RuleCat();
-        Set<AttachmentVo> _tempAttachmentVoSet = new HashSet<AttachmentVo>();
-        List<HitsDispositionCommentsVo> _tempHitsDispCommentsVoSet;
-        HitsDispositionCommentsVo _tempDispCommentsVo = new HitsDispositionCommentsVo();
-
-        try {
-            for (HitsDisposition hitDisp : _tempHitsDispositionSet) {
-                _tempHitsDisp = new HitsDispositionVo();
-                _tempRuleCat = new RuleCat();
-                _tempHitsDispCommentsVoSet = new ArrayList<>();
-                _tempAttachmentVoSet = new HashSet<AttachmentVo>();
-
-                CaseDispositionServiceImpl.copyIgnoringNullValues(hitDisp, _tempHitsDisp);
-                _tempHitsDisp.setHit_disp_id(hitDisp.getId());
-                if (hitDisp.getRuleCat() != null) {
-                    CaseDispositionServiceImpl.copyIgnoringNullValues(hitDisp.getRuleCat(), _tempRuleCat);
-                    // _tempRuleCat.setHitsDispositions(null);
-                }
-                _tempRuleCatSet.add(_tempRuleCat);
-                _tempHitsDisp.setCategory(_tempRuleCat.getCategory());
-                _tempHitsDisp.setRuleCatSet(_tempRuleCatSet);
-
-                // begin to retrieve attachments
-                if (hitDisp.getDispComments() != null) {
-                    Set<HitsDispositionComments> _tempDispCommentsSet = hitDisp.getDispComments();
-                    for (HitsDispositionComments _tempComments : _tempDispCommentsSet) {
-                        _tempDispCommentsVo = new HitsDispositionCommentsVo();
-                        _tempAttachmentVoSet = new HashSet<AttachmentVo>();
-                        CaseDispositionServiceImpl.copyIgnoringNullValues(_tempComments, _tempDispCommentsVo);
-                        _tempHitsDispCommentsVoSet.add(_tempDispCommentsVo);
-
-                        if (_tempComments.getAttachmentSet() != null) {
-
-                            for (Attachment a : _tempComments.getAttachmentSet()) {
-                                AttachmentVo attVo = new AttachmentVo();
-                                // Turn blob into byte[], as input stream is not serializable
-                                attVo.setContent(a.getContent().getBytes(1, (int) a.getContent().length()));
-                                attVo.setId(a.getId());
-                                attVo.setContentType(a.getContentType());
-                                attVo.setDescription(a.getDescription());
-                                attVo.setFilename(a.getFilename());
-                                // Drop blob from being held in memory after each set
-                                a.getContent().free();
-                                // Add to attVoList to be returned to front-end
-                                a.setPassenger(null);
-                                _tempAttachmentVoSet.add(attVo);
-                            }
-
-                        }
-                        _tempDispCommentsVo.setAttachmentSet(_tempAttachmentVoSet);
-                    }
-                    _tempHitsDispCommentsVoSet.sort(comparing(HitsDispositionCommentsVo::getCreatedAt).reversed());
-                    _tempHitsDisp.setDispCommentsVo(new LinkedHashSet<>(_tempHitsDispCommentsVoSet));
-                } // end
-
-                _tempReturnHitsDispSet.add(_tempHitsDisp);
-            }
-        } catch (Exception ex) {
-            logger.error("error returning hits disposition.", ex);
-        }
-        // _tempReturnHitsDispSet =
-        // _tempReturnHitsDispSet.stream().sorted(Comparator.comparing(HitsDispositionVo::getHit_disp_id)).collect(Collectors.toSet());
-        List<HitsDispositionVo> _tempArrList = _tempReturnHitsDispSet.stream()
-                .sorted(Comparator.comparing(HitsDispositionVo::getHit_disp_id)).collect(Collectors.toList());
-        return new HashSet<>(_tempReturnHitsDispSet.stream()
-                .sorted(Comparator.comparing(HitsDispositionVo::getHit_disp_id)).collect(Collectors.toList()));
-        // return _tempReturnHitsDispSet;
-    }
 
     /**
      * Utility method to fetch model object
@@ -1225,6 +1141,12 @@ public class CaseDispositionServiceImpl implements CaseDispositionService {
 
         List<Long> pax_group = this.passengerResolverService.resolve(paxId);
         return this.getCaseByPaxId(pax_group);
+    }
+
+    @Override
+    @Transactional
+    public List<Case> caseWithCommentsAndHitDispositionsByPaxId(Long paxId) {
+        return this.caseDispositionRepository.caseWithCommentsAndHitDispositionsByPaxId(paxId);
     }
 
     // returns version with TRUE flag, apisOnlyFlag;apisVersion, e.g. TRUE;16B or

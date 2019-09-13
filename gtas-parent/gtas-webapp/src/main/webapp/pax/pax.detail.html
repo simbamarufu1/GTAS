@@ -252,7 +252,7 @@
                       </div>
                     </div>
                     <div class="flex flex-vert ie-fix-md half-width align-items-center">
-    
+
                       <!------  DOCUMENTS   ------>
                       <div class="full-width cbp-card-container">
                         <div class="cbp-card cbp-card-shadow">
@@ -1087,29 +1087,30 @@
               
     		<!-- Cases Tab -->
     		<md-tab label="Cases" ng-if=true> <md-tab-body>
-    		
-    		
     				<div class="cbp-card-container full-width">
+
 						<div class="cbp-card cbp-card-shadow">
-							<h4 class="h-label no-margin-top">Current Case #12345678
-								Created: XX/XX/XXXX</h4>
+							<h4 class="h-label no-margin-top">
+                              ID: {{paxCase.id}}
+								Created: {{paxCase.createdAt | date:'yyyy-MM-dd HH:mm:ss'}}</h4>
 							<div
 								class="flex flex-center sm-pad scroll-container-outer ng-scope">
 								<div class="no-pad-top panel-body flex ie-fix-md half-width">
-
 									<!-- Person Info -->
-									<div class="switch-width-sm-half min-half-height right-border-grey">
-										<div
-											class="flex flex-vert align-items-center full-height quarter-width">
-											<div class="md-margin">
+									<div>
+										<div>
+											<div class="md-margin"  style="width: 100%; height: auto;">
 												<div class="flex flex-vert sm-pad-span txt-center">
-													<span> <strong>FIRSTNAME LASTNAME</strong>
-													</span> <span name="dob"> <strong>DOB:</strong> XX/XX/XXXX
-													</span> <span name="nationality"> <strong>Nationality:</strong>
-														NATIONALITY
-													</span> <span name="nationality"> <strong>Passport:</strong>
-														XXXX-XXXX-XXXX
-													</span>
+                                                  <div class="carousel bs-carousel.carousel" id="slider">
+                                                    <label class="labelSecurity">Hits</label><br />
+                                                    <div class="carousel-inner">
+                                                      <div class="item" ng-class="{active:!$index}" ng-repeat="hit in paxCase.hitsDispositionVos">
+                                                        <div style="padding-left: 10px; padding-right: 1px;">Hit Category:{{ hit.category }}</div>
+                                                        <div style="padding-left: 10px; padding-right: 10px;">Hit Description{{ hit.description }}</div>
+                                                        <div style="padding-left: 10px; padding-right: 10px;" align="text-right">Hit Status:{{ hit.status }}</div>                                                      </div>
+                                                    </div>
+                                                    <a class="carousel-control right" href="{{passenger.id}}/{{passenger.flight.id}}/#slider" data-slide="next"></a>
+                                                  </div>
 												</div>
 											</div>
 										</div>
@@ -1223,14 +1224,11 @@
 											<div class="floating-table-body">
 												<table class="cbp-table-selectable mdl-js-data-table">
 													<tbody>
-														<tr ng-click="sideNav('comments',$index)">
-															<td style="padding-left: 5px; padding-right: 1px;">TEST
-																CATEGORY</td>
-															<td style="padding-left: 1px; padding-right: 10px;">TEST
-																DESCRIPTION</td>
-															<td style="padding-left: 10px; padding-right: 10px;"
-																align="text-right">THIS IS A HIT STATUS</td>
-														</tr>
+                                                    <tr ng-repeat="hit in paxCase.hitsDispositionVos" ng-click="sideNav('comments',$index)">
+                                                      <td style="padding-left: 50px; padding-right: 1px;">{{ hit.category }}</td>
+                                                      <td style="padding-left: 1px; padding-right: 10px;">{{ hit.description }}</td>
+                                                      <td style="padding-left: 10px; padding-right: 10px;" align="text-right">{{ hit.status }}</td>
+                                                    </tr>
 
 													</tbody>
 												</table>

@@ -40,8 +40,12 @@ public interface CaseDispositionRepository extends JpaRepository<Case, Long>, Ca
     	return findById(id).orElse(null);
     }
 
+
     @Query("SELECT c FROM Case c  left join fetch c.caseComments where c.id = :id")
     public Case caseWithComments(@Param("id") Long id);
+
+    @Query("SELECT c FROM Case c  left join fetch c.caseComments left join fetch c.hitsDispositions where c.paxId = :id")
+    public List<Case> caseWithCommentsAndHitDispositionsByPaxId(@Param("id") Long id);
 
 
    @Query("SELECT c FROM Case c  left join fetch c.caseComments left join fetch c.hitsDispositions where c.id = :id")
@@ -95,6 +99,6 @@ public interface CaseDispositionRepository extends JpaRepository<Case, Long>, Ca
    @Query("update Case set encounteredStatus = :encStatus where id = :caseId")
    public void updateEncounteredStatus(@Param("caseId")Long caseId, @Param("encStatus")EncounteredStatusEnum encStatus);
    
-
+   public Case getCaseByPaxId(Long paxId);
 	
 }

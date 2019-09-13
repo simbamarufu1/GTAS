@@ -21,11 +21,14 @@
     watchlistLinks,
     paxDetailService,
     caseService,
+    passengerCase,
     watchListService,
     codeTooltipService,
     configService
   ) {
     $scope.passenger = passenger.data;
+    $scope.paxCase = passengerCase.data;
+    $scope.myInterval = 5000;
     $scope.watchlistLinks = watchlistLinks.data;
     $scope.isLoadingFlightHistory = true;
     $scope.isClosedCase = false;

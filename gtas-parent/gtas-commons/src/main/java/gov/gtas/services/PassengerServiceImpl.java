@@ -194,7 +194,7 @@ public class PassengerServiceImpl implements PassengerService {
 
             Timestamp ts = (Timestamp) objs[6];
             String datetime = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(ts);
-            vo.setCreateDate(datetime);
+            vo.setCreatedAt(ts);
             vo.setStatus((String) objs[7]);
             for (HitsSummary h : hitsSummaryRepository.findByFlightIdAndPassengerId(flightId, passengerId)) {
                 if (vo.getHitType() != null) {
