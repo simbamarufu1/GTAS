@@ -12,5 +12,5 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: simbam1/webapp
-          dockerfile: web-app.Dockerfile
+          dockerfile: Dockerfile
           tags: latest
