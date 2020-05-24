@@ -13,3 +13,6 @@ jobs:
           dockerfile: "gtas-parent/web-app.Dockerfile"
           tags: latest
 
+      - name: printer
+        run: ls
+
