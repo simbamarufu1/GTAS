@@ -5,6 +5,7 @@ jobs:
     name: webapp
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@master
       - uses: docker/build-push-action@v1
         with:
           run: ls -R /home/runner/work/GTAS
