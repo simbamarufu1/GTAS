@@ -12,5 +12,5 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: simbam1/webapp
           path: ./gtas-parent
-          dockerfile: web-app.Dockerfile
+          dockerfile: ./gtas-parent/web-app.Dockerfile
           tags: latest
