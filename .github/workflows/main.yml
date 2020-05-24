@@ -3,7 +3,7 @@ on: push
 jobs:
   build:
     name: webapp
-    runs-on: 18.04
+    runs-on: ubuntu-latest
     steps:
       - uses: docker/build-push-action@v1
         with:
