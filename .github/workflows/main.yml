@@ -5,11 +5,11 @@ jobs:
     name: webapp
     runs-on: ubuntu-latest
     steps:
-      - name: printer
-        run: ls -R /home/runner/work/GTAS
       - uses: docker/build-push-action@v1
         with:
+          run: ls -R /home/runner/work/GTAS
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: simbam1/webapp
+          dockerfile: Dockerfile
           tags: latest
