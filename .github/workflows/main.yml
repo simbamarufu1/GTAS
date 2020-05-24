@@ -12,5 +12,5 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: simbam1/webapp
-          dockerfile: "gtas-parent/web-app.Dockerfile"
+          dockerfile: "/home/runner/work/GTAS/GTAS/gtas-parent/web-app.Dockerfile"
           tags: latest
