@@ -22,5 +22,3 @@ jobs:
           aws-region: us-east-1
       - name: Trigger deploy
         uses: Consensys/kubernetes-action@master
-        with:
-          args: apply deployment.yaml
