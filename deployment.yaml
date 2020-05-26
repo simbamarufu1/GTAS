@@ -15,5 +15,3 @@ spec:
       containers:
       - name: webapp
         image: simbam1/webapp
-        ports:
-        - containerPort: 8080
