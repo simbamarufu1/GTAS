@@ -20,7 +20,8 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-      - uses: aws-actions/github-action-eksctl@v1
+      - name: eksctl-cmd
+        uses: robatwave/github-action-eksctl@0.1.2
         with:
           args: create cluster --name dev --version 1.16 --region us-east-1
 
