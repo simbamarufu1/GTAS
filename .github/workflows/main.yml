@@ -20,7 +20,11 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-      - name: Trigger deploy
-        uses: Consensys/kubernetes-action@master
+      - uses: aws-actions/github-action-eksctl@v1
         with:
-          args: get svc # apply -f deployment.yaml
+          args: create cluster --name dev --version 1.16 --region us-east-1
+
+      # - name: Trigger deploy
+      #   uses: Consensys/kubernetes-action@master
+      #   with:
+      #     args: get svc # apply -f deployment.yaml
