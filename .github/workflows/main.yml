@@ -28,4 +28,4 @@ jobs:
       # - name: Trigger deploy
       #   uses: Consensys/kubernetes-action@master
       #   with:
-      #     args: get svc # apply -f deployment.yaml    
+      #     args: get svc # apply -f deployment.yaml     
