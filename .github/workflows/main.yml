@@ -23,9 +23,8 @@ jobs:
       - name: eksctl-cmd
         uses: robatwave/github-action-eksctl@0.1.2
         with:
-          args: create cluster dev-test-five 
-
-      # - name: Trigger deploy
-      #   uses: Consensys/kubernetes-action@master
-      #   with:
-      #     args: get svc # apply -f deployment.yaml 
+          args: create cluster dev-test-six 
+      - name: Trigger deploy
+        uses: Consensys/kubernetes-action@master
+        with:
+          args: apply -f deployment.yaml 
