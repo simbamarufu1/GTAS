@@ -23,7 +23,7 @@ jobs:
       - name: eksctl-cmd
         uses: robatwave/github-action-eksctl@0.1.2
         with:
-          args: create cluster dev-test-four 
+          args: create cluster dev-test-five 
 
       # - name: Trigger deploy
       #   uses: Consensys/kubernetes-action@master
