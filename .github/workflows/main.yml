@@ -25,7 +25,8 @@ jobs:
       #   with:
       #     args: create cluster dev-test-six
       - run: |
-          apt-get -y install curl
+          apt-get update -y
+          apt-get install -y curl
           curl -L https://github.com/kubernetes/kompose/releases/download/v1.18.0/kompose-linux-amd64 -o kompose
           chmod +x kompose
           mv ./kompose /usr/local/bin/kompose
