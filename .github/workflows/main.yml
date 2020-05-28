@@ -30,9 +30,7 @@ jobs:
           curl -L https://github.com/kubernetes/kompose/releases/download/v1.21.0/kompose-linux-amd64 -o kompose
           chmod +x kompose
           sudo mv ./kompose /usr/local/bin/kompose
-          kompose convert --out deployment.yaml
-          ls
-          cat deployment.yaml
+          kompose convert --out deploy.yaml
       # - uses: azure/k8s-bake@v1
       #   with:
       #     renderEngine: 'kompose'
@@ -43,4 +41,4 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: apply -f deployment.yaml 
+          args: apply -f deploy.yaml 
