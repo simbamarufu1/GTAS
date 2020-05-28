@@ -33,7 +33,7 @@ jobs:
           kompose convert --out deploy.yaml
       # - uses: azure/k8s-bake@v1
       #   with:
-      #     renderEngine: 'kompose'
+      #     renderEngine: 'kompose' 
       #     dockerComposeFile: './docker-compose.yml'
       #     kompose-version: 'latest'     
       - name: Trigger deploy
