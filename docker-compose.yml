@@ -45,8 +45,8 @@ services:
      - webapp-neo4j-user
      - webapp-neo4j-password
      - elastic-bootstrap-password
-     - source: webapp-cert
-       target: /usr/local/tomcat/conf/wcogtas.org.crt
+     # - source: webapp-cert
+     #   target: /usr/local/tomcat/conf/wcogtas.org.crt
      # - source: webapp-key
      #   target: /usr/local/tomcat/conf/wcogtas.org.key
      # - source: elastic-cert
