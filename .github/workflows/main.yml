@@ -13,7 +13,7 @@ jobs:
       #     repository: simbam1/webapp
       #     path: ./gtas-parent
       #     dockerfile: ./gtas-parent/web-app.Dockerfile
-      #     tags: latest  
+      #     tags: latest   
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
