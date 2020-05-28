@@ -15,10 +15,10 @@ services:
       - gtas-webapp-network
     secrets:
       - elastic-bootstrap-password
-      - source: webapp-cert
-        target: /wcogtas.org.crt
-      - source: webapp-key
-        target: /wcogtas.org.key
+      # - source: webapp-cert
+      #   target: /wcogtas.org.crt
+      # - source: webapp-key
+      #   target: /wcogtas.org.key
 
   web-app:
     image: wcogtas/web-app:1.0.0
@@ -113,7 +113,7 @@ services:
     ports:
       - 3306:3306
     networks:
-      - GTAS-webapp-network
+      - gtas-webapp-network
     restart: always
     volumes:
       - db-data:/var/lib/mysql
@@ -155,7 +155,7 @@ secrets:
   elastic-cert:
     file: ./gtas-parent/gtas-commons/secrets/elasticsearch-node1.crt
   webapp-cert:
-    file: ./gtas-parent/gtas-commons/secrets/wcogtas.org.crt
+    file: ./wparent/gtas-commons/secrets/wcogtas.org.crt
   webapp-key:
     file: ./gtas-parent/gtas-commons/secrets/wcogtas.org.key
 
