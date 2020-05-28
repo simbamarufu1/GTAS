@@ -155,7 +155,7 @@ secrets:
   elastic-cert:
     file: ./gtas-parent/gtas-commons/secrets/elasticsearch-node1.crt
   webapp-cert:
-    file: ./wparent/gtas-commons/secrets/wcogtas.org.crt
+    file: ./gtas-parent/gtas-commons/secrets/wcogtas.org.crt
   webapp-key:
     file: ./gtas-parent/gtas-commons/secrets/wcogtas.org.key
 
