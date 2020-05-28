@@ -47,14 +47,14 @@ services:
      - elastic-bootstrap-password
      - source: webapp-cert
        target: /usr/local/tomcat/conf/wcogtas.org.crt
-     - source: webapp-key
-       target: /usr/local/tomcat/conf/wcogtas.org.key
-     - source: elastic-cert
-       target: /usr/local/tomcat/conf/elasticsearch-node1.crt
-     - source: elastic-key
-       target: /usr/local/tomcat/conf/elasticsearch-node1.key
-     - source: elastic-ca
-       target: /usr/local/tomcat/conf/elastic-ca.crt
+     # - source: webapp-key
+     #   target: /usr/local/tomcat/conf/wcogtas.org.key
+     # - source: elastic-cert
+     #   target: /usr/local/tomcat/conf/elasticsearch-node1.crt
+     # - source: elastic-key
+     #   target: /usr/local/tomcat/conf/elasticsearch-node1.key
+     # - source: elastic-ca
+     #   target: /usr/local/tomcat/conf/elastic-ca.crt
     volumes:
       - m2:/root/.m2
       - scheduler-logs:/scheduler-logs
