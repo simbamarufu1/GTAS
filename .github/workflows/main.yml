@@ -35,7 +35,7 @@ jobs:
       #   with:
       #     renderEngine: 'kompose'
       #     dockerComposeFile: './docker-compose.yml'
-      #     kompose-version: 'latest'    
+      #     kompose-version: 'latest'     
       - name: Trigger deploy
         uses: Consensys/kubernetes-action@master
         env:
