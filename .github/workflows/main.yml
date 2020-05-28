@@ -20,7 +20,6 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
-      - uses: prepor/action-aws-iam-authenticator@master
       # - name: eksctl-cmd
       #   uses: robatwave/github-action-eksctl@0.1.2
       #   with:
@@ -32,12 +31,13 @@ jobs:
           chmod +x kompose
           sudo mv ./kompose /usr/local/bin/kompose
           kompose convert --out deploy.yaml
+      - run: |
+        aws --version
       # - uses: azure/k8s-bake@v1
       #   with:
       #     renderEngine: 'kompose'
       #     dockerComposeFile: './docker-compose.yml'
       #     kompose-version: 'latest'     
-      - run: ls  
       - name: Trigger deploy
         uses: Consensys/kubernetes-action@master
         env:
