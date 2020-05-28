@@ -31,7 +31,6 @@ jobs:
           chmod +x kompose
           sudo mv ./kompose /usr/local/bin/kompose
           kompose convert --out deploy.yaml
-          cat deploy.yaml
       # - uses: azure/k8s-bake@v1
       #   with:
       #     renderEngine: 'kompose'
