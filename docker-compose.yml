@@ -12,7 +12,7 @@ services:
       - 443:443
       - 80:80
     networks:
-      - GTAS-webapp-network
+      - gtas-webapp-network
     secrets:
       - elastic-bootstrap-password
       - source: webapp-cert
@@ -37,7 +37,7 @@ services:
       - PROXY_HOST=httpproxy
       - ELASTICSEARCH=elasticsearch
     networks:
-      - GTAS-webapp-network
+      - gtas-webapp-network
     restart: always
     secrets:
      - mysql-webapp-user
@@ -79,7 +79,7 @@ services:
       - webapp-neo4j-user
       - webapp-neo4j-password
     networks:
-      - GTAS-webapp-network
+      - gtas-webapp-network
     depends_on: 
       - activemq
 
@@ -88,7 +88,7 @@ services:
     container_name: activemq
     restart: always
     networks: 
-      - GTAS-webapp-network
+      - gtas-webapp-network
 
   mariadb:
     image: wcogtas/mariadb:1.0.0
@@ -165,5 +165,5 @@ volumes:
   scheduler-logs:
 
 networks:
-  GTAS-webapp-network:
+  gtas-webapp-network:
     attachable: true

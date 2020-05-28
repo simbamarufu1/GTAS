@@ -16,7 +16,7 @@ services:
     volumes:
       - kibana-conf:/usr/share/kibana/data
     networks:
-      - GTAS-webapp-network
+      - gtas-webapp-network
     secrets:
       - source: elasticsearch-ca
         target: /etc/kibana/config/ca.crt
@@ -41,7 +41,7 @@ services:
       - es-data:/usr/share/elasticsearch/data
       - elasticsearch-conf:/usr/share/elasticsearch/config/
     networks: 
-      - GTAS-webapp-network
+      - gtas-webapp-network
     secrets:
       - source: elasticsearch-ca
         target: /usr/share/elasticsearch/config/certs/elasticsearch/elastic-ca.crt
@@ -65,7 +65,7 @@ services:
     secrets:
       - elasticsearch-ca
     networks:
-      - GTAS-webapp-network
+      - gtas-webapp-network
     volumes:
       - logstash-conf:/usr/share/logstash/config/
     depends_on:
@@ -93,7 +93,7 @@ services:
       - elasticsearch-kibana-password
       - elastic-bootstrap-password
     networks:
-      - GTAS-webapp-network
+      - gtas-webapp-network
 
 
 secrets:
@@ -129,5 +129,5 @@ volumes:
   es-data:
 
 networks:
-  GTAS-webapp-network:
+  gtas-webapp-network:
     attachable: true
