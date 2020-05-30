@@ -134,12 +134,6 @@ secrets:
     file: ./gtas-parent/gtas-commons/secrets/webapp_neo4j_user.txt
   webapp-neo4j-password:
     file: ./gtas-parent/gtas-commons/secrets/webapp_neo4j_password.txt
-  elastic-key:
-    file: ./gtas-parent/gtas-commons/certs/elasticsearch-node1.key
-  elastic-ca:
-    file: ./gtas-parent/gtas-commons/certs/elastic-ca.crt
-  elastic-cert:
-    file: ./gtas-parent/gtas-commons/cers/elasticsearch-node1.crt
 
 volumes:
   db-data:
