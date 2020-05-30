@@ -14,7 +14,6 @@ jobs:
           path: ./gtas-parent
           dockerfile: ./gtas-parent/web-app.Dockerfile
           tags: latest
-            - uses: docker/build-push-action@v1
       - uses: docker/build-push-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
