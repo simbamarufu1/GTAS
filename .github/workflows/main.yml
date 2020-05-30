@@ -6,14 +6,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - uses: docker/build-push-action@v1
-        with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: simbam1/webapp  
-          path: ./gtas-parent    
-          dockerfile: ./gtas-parent/web-app.Dockerfile
-          tags: latest        
+      # - uses: docker/build-push-action@v1
+      #   with:
+      #     username: ${{ secrets.DOCKER_USERNAME }}
+      #     password: ${{ secrets.DOCKER_PASSWORD }}
+      #     repository: simbam1/webapp  
+      #     path: ./gtas-parent    
+      #     dockerfile: ./gtas-parent/web-app.Dockerfile
+      #     tags: latest        
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -26,7 +26,7 @@ jobs:
           curl -L https://github.com/kubernetes/kompose/releases/download/v1.21.0/kompose-linux-amd64 -o kompose
           chmod +x kompose
           sudo mv ./kompose /usr/local/bin/kompose
-          kompose -f docker-compose.yml,elk-docker-compose.yml,neo4j-etl-docker-compose.yml,pipeline-deployment.yaml convert --out deploy.yaml
+          kompose -f docker-compose.yml -f elk-docker-compose.yml -f neo4j-etl-docker-compose.yml -f pipeline-deployment.yaml convert --out deploy.yaml
           aws sts get-caller-identity
       # - uses: azure/k8s-bake@v1
       #   with:
