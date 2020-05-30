@@ -42,13 +42,6 @@ services:
       - elasticsearch-conf:/usr/share/elasticsearch/config/
     networks: 
       - gtas-webapp-network
-    secrets:
-      - source: elasticsearch-ca
-        target: /usr/share/elasticsearch/config/certs/elasticsearch/elastic-ca.crt
-      - source: elasticsearch-instance-crt
-        target: /usr/share/elasticsearch/config/certs/elasticsearch/elasticsearch-node1.crt
-      - source: elasticsearch-instance-key
-        target: /usr/share/elasticsearch/config/certs/elasticsearch/elasticsearch-node1.key
 
   logstash:
     image: wcogtas/logstash:1.0.0
@@ -111,12 +104,6 @@ secrets:
     file: ./gtas-parent/gtas-commons/secrets/elasticsearch_kibana_password.txt
   elastic-bootstrap-password:
     file: ./gtas-parent/gtas-commons/secrets/elastic_bootstrap_password.txt
-  elasticsearch-ca:
-    file: ./gtas-parent/gtas-commons/secrets/elastic-ca.crt
-  elasticsearch-instance-crt:
-    file: ./gtas-parent/gtas-commons/secrets/elasticsearch-node1.crt
-  elasticsearch-instance-key:
-    file: ./gtas-parent/gtas-commons/secrets/elasticsearch-node1.key
   kibana-crt:
     file: ./gtas-parent/gtas-commons/secrets/kibana.crt
   kibana-key:

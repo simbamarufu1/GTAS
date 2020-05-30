@@ -15,10 +15,6 @@ services:
       - gtas-webapp-network
     secrets:
       - elastic-bootstrap-password
-      # - source: webapp-cert
-      #   target: /wcogtas.org.crt
-      # - source: webapp-key
-      #   target: /wcogtas.org.key
 
   web-app:
     image: wcogtas/web-app:1.0.0
@@ -45,16 +41,6 @@ services:
      - webapp-neo4j-user
      - webapp-neo4j-password
      - elastic-bootstrap-password
-     # - source: webapp-cert
-     #   target: /usr/local/tomcat/conf/wcogtas.org.crt
-     # - source: webapp-key
-     #   target: /usr/local/tomcat/conf/wcogtas.org.key
-     # - source: elastic-cert
-     #   target: /usr/local/tomcat/conf/elasticsearch-node1.crt
-     # - source: elastic-key
-     #   target: /usr/local/tomcat/conf/elasticsearch-node1.key
-     # - source: elastic-ca
-     #   target: /usr/local/tomcat/conf/elastic-ca.crt
     volumes:
       - m2:/root/.m2
       - scheduler-logs:/scheduler-logs
@@ -149,15 +135,11 @@ secrets:
   webapp-neo4j-password:
     file: ./gtas-parent/gtas-commons/secrets/webapp_neo4j_password.txt
   elastic-key:
-    file: ./gtas-parent/gtas-commons/secrets/elasticsearch-node1.key
+    file: ./gtas-parent/gtas-commons/certs/elasticsearch-node1.key
   elastic-ca:
-    file: ./gtas-parent/gtas-commons/secrets/elastic-ca.crt
+    file: ./gtas-parent/gtas-commons/certs/elastic-ca.crt
   elastic-cert:
-    file: ./gtas-parent/gtas-commons/secrets/elasticsearch-node1.crt
-  webapp-cert:
-    file: ./gtas-parent/gtas-commons/secrets/wcogtas.org.crt
-  webapp-key:
-    file: ./gtas-parent/gtas-commons/secrets/wcogtas.org.key
+    file: ./gtas-parent/gtas-commons/cers/elasticsearch-node1.crt
 
 volumes:
   db-data:

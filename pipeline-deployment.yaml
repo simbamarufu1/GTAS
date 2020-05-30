@@ -1,0 +1,85 @@
+version: '3.7'
+services:
+  http-proxy:
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == node-a
+    volumes:
+      - ./gtas-parent/gtas-commons/certs:/
+  web-app:
+    environment:
+      JAVA_TOOL_OPTIONS: "-XX:+IgnoreUnrecognizedVMOptions -XX:+UseContainerSupport"
+      # JAVA_OPTS: "-Xms4g -Xmx8g -XX:MaxPermSize=16g -Duser.timezone=UTC"
+      EMAIL_SENDER_USERNAME: ""
+      EMAIL_SENDER_PASSWORD: ""
+      EMAIL_SENDER_HOST: ""
+      SSL_TRUST_HOST: ""
+      AUTOMATED_HIT_NOTIFICATION_EMAIL_ENABLED: "false"
+      MANUAL_HIT_NOTIFICATION_EMAIL_ENABLED: "false"
+      PROXY_IP: ""
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == node-a
+    volumes:
+      - ./gtas-parent/gtas-commons/certs:/usr/local/tomcat/conf
+  gtas-scheduler:
+    environment:
+      JAVA_TOOL_OPTIONS: "-XX:+IgnoreUnrecognizedVMOptions -XX:+UseContainerSupport"
+      # JAVA_OPTS: "-Xms8000m -Xmx16000m -Duser.timezone=UTC -Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom"
+      EMAIL_SENDER_USERNAME: ""
+      EMAIL_SENDER_PASSWORD: ""
+      EMAIL_SENDER_HOST: ""
+      SSL_TRUST_HOST: ""
+      AUTOMATED_HIT_NOTIFICATION_EMAIL_ENABLED: "false"
+      MANUAL_HIT_NOTIFICATION_EMAIL_ENABLED: "false"
+      PROXY_IP: ""
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == node-a
+  activemq:
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == node-b
+  mariadb:
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == node-b
+  kibana:
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == node-a
+    volumes:
+      - ./gtas-parent/gtas-commons/certs:/etc/kibana/config
+  elasticsearch:
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == node-b
+    volumes:
+      - ./gtas-parent/gtas-commons/certs:/usr/share/elasticsearch/config/certs/elasticsearch
+  logstash:
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == node-b
+  elk-setup:
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == node-b
+  neo4j:
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == node-a
+
+networks:
+  gtas_webapp-network:
+    driver: "overlay"
+    attachable: true
