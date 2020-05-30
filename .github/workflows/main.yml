@@ -6,14 +6,87 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      # - uses: docker/build-push-action@v1
-      #   with:
-      #     username: ${{ secrets.DOCKER_USERNAME }}
-      #     password: ${{ secrets.DOCKER_PASSWORD }} 
-      #     repository: simbam1/webapp  
-      #     path: ./gtas-parent    
-      #     dockerfile: ./gtas-parent/web-app.Dockerfile
-      #     tags: latest        
+      - uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }} 
+          repository: simbam1/webapp:1.0.1  
+          path: ./gtas-parent
+          dockerfile: ./gtas-parent/web-app.Dockerfile
+          tags: latest
+            - uses: docker/build-push-action@v1
+      - uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }} 
+          repository: simbam1/mariadb:1.0.1  
+          path: ./gtas-parent
+          dockerfile: ./gtas-parent/mariadb.Dockerfile
+          tags: latest
+      - uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }} 
+          repository: simbam1/http-proxy:1.0.1 
+          path: ./gtas-parent
+          dockerfile: ./gtas-parent/docker-resources/proxy.Dockerfile
+          tags: latest
+      - uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }} 
+          repository: simbam1/gtas-scheduler:1.0.1
+          path: .
+          dockerfile: ./gtas-parent/gtas-job-scheduler-war/gtas-scheduler.Dockerfile
+          tags: latest
+      - uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }} 
+          repository: simbam1/kibana:1.0.1
+          path: ./gtas-parent/scripts/elastic
+          dockerfile: ./gtas-parent/scripts/elastic/install/docker/kibana/kibana.Dockerfile
+          tags: latest
+      - uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }} 
+          repository: simbam1/elasticsearch:1.0.1
+          path: ./gtas-parent/scripts/elastic
+          dockerfile: ./gtas-parent/scripts/elastic/install/docker/elasticsearch/elasticsearch.Dockerfile
+          tags: latest
+      - uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }} 
+          repository: simbam1/logstash:1.0.1
+          path: ./gtas-parent/scripts/elastic
+          dockerfile: ./gtas-parent/scripts/elastic/install/docker/elasticsearch/logstash.Dockerfile
+          tags: latest
+      - uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }} 
+          repository: simbam1/elk-setup:1.0.1
+          path: ./gtas-parent/scripts/elastic
+          dockerfile: ./gtas-parent/scripts/elastic/install/docker/elasticsearch/elk-setup.Dockerfile
+          tags: latest
+      - uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }} 
+          repository: simbam1/neo4j-etl-job:1.0.1
+          path: .
+          dockerfile: ./gtas-neo4j-etl/etl_job.Dockerfile
+          tags: latest
+      - uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }} 
+          repository: simbam1/neo4j:1.0.1
+          path: .
+          dockerfile: ./gtas-neo4j-etl/neo4j.Dockerfile
+          tags: latest
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
