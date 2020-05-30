@@ -131,8 +131,12 @@ secrets:
   elastic-ca:
     file: ./gtas-parent/gtas-commons/certs/elastic-ca.crt
   elastic-cert:
-    file: ./gtas-parent/gtas-commons/cers/elasticsearch-node1.crt
+    file: ./gtas-parent/gtas-commons/certs/elasticsearch-node1.crt
   webapp-cert:
     file: ./gtas-parent/gtas-commons/certs/wcogtas.org.crt
   webapp-key:
     file: ./gtas-parent/gtas-commons/certs/wcogtas.org.key
+  kibana-crt:
+    file: ./gtas-parent/gtas-commons/certs/kibana.crt
+  kibana-key:
+    file: ./gtas-parent/gtas-commons/certs/kibana.key

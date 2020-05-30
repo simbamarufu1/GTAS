@@ -67,3 +67,8 @@ secrets:
     file: ./gtas-parent/gtas-commons/certs/wcogtas.org.crt
   webapp-key:
     file: ./gtas-parent/gtas-commons/certs/wcogtas.org.key
+  kibana-crt:
+    file: ./gtas-parent/gtas-commons/certs/kibana.crt
+  kibana-key:
+    file: ./gtas-parent/gtas-commons/certs/kibana.key
+  

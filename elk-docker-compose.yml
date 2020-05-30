@@ -17,13 +17,6 @@ services:
       - kibana-conf:/usr/share/kibana/data
     networks:
       - gtas-webapp-network
-    secrets:
-      - source: elasticsearch-ca
-        target: /etc/kibana/config/ca.crt
-      - source: kibana-crt
-        target: /etc/kibana/config/kibana.crt
-      - source: kibana-key
-        target: /etc/kibana/config/kibana.key
     depends_on:
       - elasticsearch
 
@@ -104,10 +97,6 @@ secrets:
     file: ./gtas-parent/gtas-commons/secrets/elasticsearch_kibana_password.txt
   elastic-bootstrap-password:
     file: ./gtas-parent/gtas-commons/secrets/elastic_bootstrap_password.txt
-  kibana-crt:
-    file: ./gtas-parent/gtas-commons/secrets/kibana.crt
-  kibana-key:
-    file: ./gtas-parent/gtas-commons/secrets/kibana.key
 
 volumes:
   logstash-conf:
