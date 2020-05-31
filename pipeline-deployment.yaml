@@ -99,7 +99,7 @@ services:
   etl-job:
     deploy:
       labels:
-        app: neo4j
+        app: "neo4j"
       placement:
         constraints:
           - node.labels.role == node-b
