@@ -4,7 +4,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.role == node-a
+          - node.labels.role == node-as
     volumes:
       - ./gtas-parent/gtas-commons/certs:/
   web-app:
@@ -23,7 +23,7 @@ services:
         app: webapp
       placement:
         constraints:
-          - node.labels.role == node-a
+          - node.labels.role == node-as
     volumes:
       - ./gtas-parent/gtas-commons/certs:/usr/local/tomcat/conf
   gtas-scheduler:
@@ -42,21 +42,21 @@ services:
         app: scheduler
       placement:
         constraints:
-          - node.labels.role == node-a
+          - node.labels.role == node-as
   activemq:
     deploy:
       labels:
         app: scheduler
       placement:
         constraints:
-          - node.labels.role == node-b
+          - node.labels.role == node-bs
   mariadb:
     deploy:
       labels:
         app: webapp
       placement:
         constraints:
-          - node.labels.role == node-b
+          - node.labels.role == node-bs
   kibana:
     deploy:
       labels:
@@ -95,14 +95,14 @@ services:
         app: neo4j
       placement:
         constraints:
-          - node.labels.role == node-a
+          - node.labels.role == node-as
   etl-job:
     deploy:
       labels:
         app: "neo4j"
       placement:
         constraints:
-          - node.labels.role == node-b
+          - node.labels.role == node-bs
 
 networks:
   gtas_webapp-network:
