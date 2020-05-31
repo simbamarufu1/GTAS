@@ -110,4 +110,4 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          args: apply  --v=10 -f deploy.yaml -l app=neo4j
+          args: apply  --v=10 -f deploy.yaml --prune -l app=neo4j
