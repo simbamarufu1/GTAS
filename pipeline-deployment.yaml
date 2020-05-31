@@ -1,12 +1,12 @@
 version: '3.7'
 services:
-  # http-proxy:
-  #   deploy:
-  #     placement:
-  #       constraints:
-  #         - node.labels.role == node-a
-  #   volumes:
-  #     - ./gtas-parent/gtas-commons/certs:/
+  http-proxy:
+    deploy:
+      placement:
+        constraints:
+          - node.labels.role == node-a
+    volumes:
+      - ./gtas-parent/gtas-commons/certs:/
   web-app:
     environment:
       JAVA_TOOL_OPTIONS: "-XX:+IgnoreUnrecognizedVMOptions -XX:+UseContainerSupport"
@@ -19,65 +19,90 @@ services:
       MANUAL_HIT_NOTIFICATION_EMAIL_ENABLED: "false"
       PROXY_IP: ""
     deploy:
+      labels:
+        app: webapp
       placement:
         constraints:
           - node.labels.role == node-a
     volumes:
       - ./gtas-parent/gtas-commons/certs:/usr/local/tomcat/conf
-  # gtas-scheduler:
-  #   environment:
-  #     JAVA_TOOL_OPTIONS: "-XX:+IgnoreUnrecognizedVMOptions -XX:+UseContainerSupport"
-  #     # JAVA_OPTS: "-Xms8000m -Xmx16000m -Duser.timezone=UTC -Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom"
-  #     EMAIL_SENDER_USERNAME: ""
-  #     EMAIL_SENDER_PASSWORD: ""
-  #     EMAIL_SENDER_HOST: ""
-  #     SSL_TRUST_HOST: ""
-  #     AUTOMATED_HIT_NOTIFICATION_EMAIL_ENABLED: "false"
-  #     MANUAL_HIT_NOTIFICATION_EMAIL_ENABLED: "false"
-  #     PROXY_IP: ""
-  #   deploy:
-  #     placement:
-  #       constraints:
-  #         - node.labels.role == node-a
-  # activemq:
-  #   deploy:
-  #     placement:
-  #       constraints:
-  #         - node.labels.role == node-b
-  mariadb:
+  gtas-scheduler:
+    environment:
+      JAVA_TOOL_OPTIONS: "-XX:+IgnoreUnrecognizedVMOptions -XX:+UseContainerSupport"
+      # JAVA_OPTS: "-Xms8000m -Xmx16000m -Duser.timezone=UTC -Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom"
+      EMAIL_SENDER_USERNAME: ""
+      EMAIL_SENDER_PASSWORD: ""
+      EMAIL_SENDER_HOST: ""
+      SSL_TRUST_HOST: ""
+      AUTOMATED_HIT_NOTIFICATION_EMAIL_ENABLED: "false"
+      MANUAL_HIT_NOTIFICATION_EMAIL_ENABLED: "false"
+      PROXY_IP: ""
     deploy:
+      labels:
+        app: scheduler
+      placement:
+        constraints:
+          - node.labels.role == node-a
+  activemq:
+    deploy:
+      labels:
+        app: scheduler
       placement:
         constraints:
           - node.labels.role == node-b
-  # kibana:
-  #   deploy:
-  #     placement:
-  #       constraints:
-  #         - node.labels.role == node-a
-  #   volumes:
-  #     - ./gtas-parent/gtas-commons/certs:/etc/kibana/config
-  # elasticsearch:
-  #   deploy:
-  #     placement:
-  #       constraints:
-  #         - node.labels.role == node-b
-  #   volumes:
-  #     - ./gtas-parent/gtas-commons/certs:/usr/share/elasticsearch/config/certs/elasticsearch
-  # logstash:
-  #   deploy:
-  #     placement:
-  #       constraints:
-  #         - node.labels.role == node-b
-  # elk-setup:
-  #   deploy:
-  #     placement:
-  #       constraints:
-  #         - node.labels.role == node-b
-  # neo4j:
-  #   deploy:
-  #     placement:
-  #       constraints:
-  #         - node.labels.role == node-a
+  mariadb:
+    deploy:
+      labels:
+        app: webapp
+      placement:
+        constraints:
+          - node.labels.role == node-b
+  kibana:
+    deploy:
+      labels:
+        app: elk
+      placement:
+        constraints:
+          - node.labels.role == node-a
+    volumes:
+      - ./gtas-parent/gtas-commons/certs:/etc/kibana/config
+  elasticsearch:
+    deploy:
+      labels:
+        app: elk
+      placement:
+        constraints:
+          - node.labels.role == node-b
+    volumes:
+      - ./gtas-parent/gtas-commons/certs:/usr/share/elasticsearch/config/certs/elasticsearch
+  logstash:
+    deploy:
+      labels:
+        app: elk
+      placement:
+        constraints:
+          - node.labels.role == node-b
+  elk-setup:
+    deploy:
+      labels:
+        app: elk
+      placement:
+        constraints:
+          - node.labels.role == node-b
+  neo4j:
+    deploy:
+      labels:
+        app: neo4j
+      placement:
+        constraints:
+          - node.labels.role == node-a
+  etl-job:
+    deploy:
+      labels:
+        app: neo4j
+      placement:
+        constraints:
+          - node.labels.role == node-b
 
 networks:
   gtas_webapp-network:

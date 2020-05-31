@@ -45,36 +45,36 @@ services:
       - m2:/root/.m2
       - scheduler-logs:/scheduler-logs
 
-  # gtas-scheduler:
-  #   image: wcogtas/gtas-scheduler:1.0.0
-  #   container_name: gtas-scheduler
-  #   build: 
-  #     context: .
-  #     dockerfile: ./gtas-parent/gtas-job-scheduler-war/gtas-scheduler.Dockerfile
-  #   restart: always
-  #   environment:
-  #     DB_HOST: mariadb
-  #     KIBANA_HOST: kibana
-  #     NEO4J_HOST: neo4j
-  #     ACTIVEMQ_HOST: activemq
-  #   volumes:
-  #     - scheduler-logs:/usr/local/tomcat/logs
-  #   secrets:
-  #     - mysql-processor-user
-  #     - mysql-processor-password
-  #     - webapp-neo4j-user
-  #     - webapp-neo4j-password
-  #   networks:
-  #     - gtas-webapp-network
-  #   depends_on: 
-  #     - activemq
+  gtas-scheduler:
+    image: wcogtas/gtas-scheduler:1.0.0
+    container_name: gtas-scheduler
+    build: 
+      context: .
+      dockerfile: ./gtas-parent/gtas-job-scheduler-war/gtas-scheduler.Dockerfile
+    restart: always
+    environment:
+      DB_HOST: mariadb
+      KIBANA_HOST: kibana
+      NEO4J_HOST: neo4j
+      ACTIVEMQ_HOST: activemq
+    volumes:
+      - scheduler-logs:/usr/local/tomcat/logs
+    secrets:
+      - mysql-processor-user
+      - mysql-processor-password
+      - webapp-neo4j-user
+      - webapp-neo4j-password
+    networks:
+      - gtas-webapp-network
+    depends_on: 
+      - activemq
 
-  # activemq:
-  #   image: rmohr/activemq:5.15.9
-  #   container_name: activemq
-  #   restart: always
-  #   networks: 
-  #     - gtas-webapp-network
+  activemq:
+    image: rmohr/activemq:5.15.9
+    container_name: activemq
+    restart: always
+    networks: 
+      - gtas-webapp-network
 
   mariadb:
     image: wcogtas/mariadb:1.0.0

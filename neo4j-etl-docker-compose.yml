@@ -19,10 +19,6 @@ services:
       - etl-neo4j-password
     networks: 
       - gtas-webapp-network
-    deploy:
-      placement:
-        constraints:
-          - node.hostname == gtas-app-node
     depends_on: 
       - neo4j
 

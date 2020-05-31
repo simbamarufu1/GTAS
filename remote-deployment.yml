@@ -120,6 +120,11 @@ services:
       placement:
         constraints:
           - node.hostname == gtas-neo4j-node
+  etl-job:
+    deploy:
+      placement:
+        constraints:
+          - node.hostname == gtas-app-node
 
 networks:
   GTAS_webapp-network:
