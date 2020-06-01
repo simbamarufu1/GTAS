@@ -29,7 +29,7 @@ RUN cp -r /usr/share/logstash/config/* /logstash-conf/
 
 COPY ./install/docker/elk-setup/kibana.default-dashboard.json .
 
-ENTRYPOINT echo y | ./elasticsearch/bin/elasticsearch-keystore create \
+ENTRYPOINT ls /run/secrets && echo y | ./elasticsearch/bin/elasticsearch-keystore create \
 	&& ./elasticsearch/bin/elasticsearch-keystore add bootstrap.password </run/secrets/elastic-bootstrap-password \
 	&& cp ./elasticsearch/config/elasticsearch.keystore /elasticsearch-conf/elasticsearch.keystore \
 	&& export LOGSTASH_KEYSTORE_PASS=$(cat /run/secrets/logstash-keystore-password) \
