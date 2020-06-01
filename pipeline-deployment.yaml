@@ -2,6 +2,8 @@ version: '3.7'
 services:
   # http-proxy:
   #   deploy:
+  #     labels:
+  #       kompose.image-pull-policy: true
   #     placement:
   #       constraints:
   #         - node.labels.role == node-as
@@ -20,7 +22,7 @@ services:
   #     PROXY_IP: ""
   #   deploy:
   #     labels:
-  #       app: webapp
+  #       kompose.image-pull-policy: true
   #     placement:
   #       constraints:
   #         - node.labels.role == node-as
@@ -39,28 +41,28 @@ services:
   #     PROXY_IP: ""
   #   deploy:
   #     labels:
-  #       app: scheduler
+  #       kompose.image-pull-policy: true
   #     placement:
   #       constraints:
   #         - node.labels.role == node-as
   # activemq:
   #   deploy:
   #     labels:
-  #       app: scheduler
+  #       kompose.image-pull-policy: true
   #     placement:
   #       constraints:
   #         - node.labels.role == node-bs
   # mariadb:
   #   deploy:
   #     labels:
-  #       app: webapp
+  #       kompose.image-pull-policy: true
   #     placement:
   #       constraints:
   #         - node.labels.role == node-bs
   kibana:
     deploy:
       labels:
-        app: elk
+        kompose.image-pull-policy: true
       placement:
         constraints:
           - node.labels.role == node-a
@@ -69,7 +71,7 @@ services:
   elasticsearch:
     deploy:
       labels:
-        app: elk
+        kompose.image-pull-policy: true
       placement:
         constraints:
           - node.labels.role == node-b
@@ -78,28 +80,28 @@ services:
   logstash:
     deploy:
       labels:
-        app: elk
+        kompose.image-pull-policy: true
       placement:
         constraints:
           - node.labels.role == node-b
   elk-setup:
     deploy:
       labels:
-        app: elk
+        kompose.image-pull-policy: true
       placement:
         constraints:
           - node.labels.role == node-b
   # neo4j:
   #   deploy:
   #     labels:
-  #       app: neo4j
+  #       kompose.image-pull-policy: true
   #     placement:
   #       constraints:
   #         - node.labels.role == node-as
   # etl-job:
   #   deploy:
   #     labels:
-  #       app: "neo4j"
+  #       kompose.image-pull-policy: true
   #     placement:
   #       constraints:
   #         - node.labels.role == node-bs
