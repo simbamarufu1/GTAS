@@ -29,7 +29,7 @@ RUN cp -r /usr/share/logstash/config/* /logstash-conf/
 
 COPY ./install/docker/elk-setup/kibana.default-dashboard.json .
 
-ENTRYPOINT echo y | ./elasticsearch/bin/elasticsearch-keystore create \
+ENTRYPOINT echo y | ./elasticsearch/bin/elasticsearch-keystore create  && echo "LOD SABADAM!" \
 	&& ./elasticsearch/bin/elasticsearch-keystore add bootstrap.password </run/secrets/elastic-bootstrap-password \
 	&& cp ./elasticsearch/config/elasticsearch.keystore /elasticsearch-conf/elasticsearch.keystore \
 	&& export LOGSTASH_KEYSTORE_PASS=$(cat /run/secrets/logstash-keystore-password) \
