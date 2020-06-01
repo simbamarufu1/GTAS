@@ -49,7 +49,7 @@ services:
       LOGSTASH_KEYSTORE_PASS: admin123
     restart: always
     secrets:
-      - elasticsearch-ca
+      - elastic-ca
     networks:
       - gtas-webapp-network
     volumes:

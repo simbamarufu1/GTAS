@@ -65,7 +65,7 @@ services:
         constraints:
           - node.labels.role == node-a
     volumes:
-      - ./gtas-parent/gtas-commons/certs:/etc/kibana/config
+      - ./gtas-parent/gtas-commons/certs/:/etc/kibana/config/
   elasticsearch:
     deploy:
       labels:
@@ -74,7 +74,7 @@ services:
         constraints:
           - node.labels.role == node-b
     volumes:
-      - ./gtas-parent/gtas-commons/certs:/usr/share/elasticsearch/config/certs/elasticsearch
+      - ./gtas-parent/gtas-commons/certs/:/usr/share/elasticsearch/config/certs/elasticsearch/
   logstash:
     deploy:
       labels:
