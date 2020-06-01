@@ -61,7 +61,7 @@ jobs:
       #     repository: simbam1/logstash
       #     path: ./gtas-parent/scripts/elastic
       #     dockerfile: ./gtas-parent/scripts/elastic/install/docker/logstash/logstash.Dockerfile
-      #     tags: 1.0.1
+      #     tags: 1.0.1 
       # - uses: docker/build-push-action@v1
       #   with:
       #     username: ${{ secrets.DOCKER_USERNAME }}
