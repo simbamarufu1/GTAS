@@ -69,7 +69,7 @@ jobs:
           repository: simbam1/elk-setup
           path: ./gtas-parent/scripts/elastic
           dockerfile: ./gtas-parent/scripts/elastic/install/docker/elk-setup/elk-setup.Dockerfile
-          tags: 1.0.6
+          tags: 1.0.7
       # - uses: docker/build-push-action@v1
       #   with:
       #     username: ${{ secrets.DOCKER_USERNAME }} 
