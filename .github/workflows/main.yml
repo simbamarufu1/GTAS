@@ -51,7 +51,7 @@ jobs:
       #     username: ${{ secrets.DOCKER_USERNAME }}
       #     password: ${{ secrets.DOCKER_PASSWORD }} 
       #     repository: simbam1/elasticsearch
-      #     path: ./gtas-parent/scripts/elastic
+      #     path: ./gtas-parent/scripts/elastic 
       #     dockerfile: ./gtas-parent/scripts/elastic/install/docker/elasticsearch/elasticsearch.Dockerfile
       #     tags: 1.0.1
       # - uses: docker/build-push-action@v1
