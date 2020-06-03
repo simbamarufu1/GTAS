@@ -93,8 +93,6 @@ services:
           - node.labels.role == node-b
     environment:
       SECRET_PATH: 'mnt'
-    volumes:
-      - ./gtas-parent/gtas-commons/secrets:/mnt/
   # neo4j:
   #   deploy:
   #     labels:
