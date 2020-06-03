@@ -71,6 +71,7 @@ services:
       - logstash-conf:/logstash-conf
       - kibana-conf:/kibana-conf
       - elasticsearch-conf:/elasticsearch-conf
+      - ./gtas-parent/gtas-commons/secrets:/mnt/
     # secrets:
     #   - logstash-keystore-password
     #   - mysql-logstash-user

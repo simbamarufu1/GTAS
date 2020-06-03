@@ -6,7 +6,7 @@ services:
   #       kompose.image-pull-policy: true
   #     placement:
   #       constraints:
-  #         - node.labels.role == node-as
+  #         - node.labels.role == node-a
   #   volumes:
   #     - ./gtas-parent/gtas-commons/certs:/
   # web-app:
@@ -25,7 +25,7 @@ services:
   #       kompose.image-pull-policy: true
   #     placement:
   #       constraints:
-  #         - node.labels.role == node-as
+  #         - node.labels.role == node-a
   #   volumes:
   #     - ./gtas-parent/gtas-commons/certs:/usr/local/tomcat/conf
   # gtas-scheduler:
@@ -44,21 +44,21 @@ services:
   #       kompose.image-pull-policy: true
   #     placement:
   #       constraints:
-  #         - node.labels.role == node-as
+  #         - node.labels.role == node-a
   # activemq:
   #   deploy:
   #     labels:
   #       kompose.image-pull-policy: true
   #     placement:
   #       constraints:
-  #         - node.labels.role == node-bs
+  #         - node.labels.role == node-b
   # mariadb:
   #   deploy:
   #     labels:
   #       kompose.image-pull-policy: true
   #     placement:
   #       constraints:
-  #         - node.labels.role == node-bs
+  #         - node.labels.role == node-b
   kibana:
     deploy:
       labels:
@@ -101,14 +101,14 @@ services:
   #       kompose.image-pull-policy: true
   #     placement:
   #       constraints:
-  #         - node.labels.role == node-as
+  #         - node.labels.role == node-a
   # etl-job:
   #   deploy:
   #     labels:
   #       kompose.image-pull-policy: true
   #     placement:
   #       constraints:
-  #         - node.labels.role == node-bs
+  #         - node.labels.role == node-b
 
 networks:
   gtas_webapp-network:
