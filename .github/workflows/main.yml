@@ -99,13 +99,6 @@ jobs:
           chmod +x kompose
           sudo mv ./kompose /usr/local/bin/kompose
           kompose -f elk-docker-compose.yml convert --out deploy.yaml
-        # sed -i 's|/logstash-keystore-password|/|' deploy.yaml
-         # sed -i 's|/mysql-logstash-user|/|' deploy.yaml
-          # sed -i 's|/mysql-logstash-password|/|' deploy.yaml
-          # sed -i 's|/elastic-password|/|' deploy.yaml
-          # sed -i 's|/elasticsearch-kibana-user|/|' deploy.yaml
-          # sed -i 's|/elasticsearch-kibana-password|/|' deploy.yaml
-          # sed -i 's|/elastic-bootstrap-password|/|' deploy.yaml
           aws sts get-caller-identity
       # -f docker-compose.yml -f neo4j-etl-docker-compose.yml -f pipeline-deployment.yaml convert --out deploy.yaml
       # - uses: azure/k8s-bake@v1
