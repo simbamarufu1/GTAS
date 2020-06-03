@@ -91,8 +91,10 @@ services:
       placement:
         constraints:
           - node.labels.role == node-b
+    environment:
+      dir: "mnt"
     volumes:
-      - ./gtas-parent/gtas-commons/secrets/logstash-keystore-password:/run/secrets/logstash-keystore-password
+      - ./gtas-parent/gtas-commons/secrets:/mnt/secrets
   # neo4j:
   #   deploy:
   #     labels:
