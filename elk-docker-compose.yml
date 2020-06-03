@@ -58,7 +58,7 @@ services:
       - elasticsearch
 
   elk-setup:
-    image: simbam1/elk-setup:1.1.0
+    image: simbam1/elk-setup:1.1.1
     container_name: elk-setup
     build:
       context: ./gtas-parent/scripts/elastic
@@ -66,6 +66,7 @@ services:
     environment:
       KIBANA_HOST: 'kibana'
       ELASTICSEARCH_HOST: 'elasticsearch'
+      SECRET_PATH: 'mnt' 
     volumes:
       - logstash-conf:/logstash-conf
       - kibana-conf:/kibana-conf
