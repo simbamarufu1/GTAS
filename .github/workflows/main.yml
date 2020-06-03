@@ -99,7 +99,7 @@ jobs:
           chmod +x kompose
           sudo mv ./kompose /usr/local/bin/kompose
           kompose -f elk-docker-compose.yml convert --out deploy.yaml
-          * ls ./gtas-parent/gtas-commons/secrets
+          ls ./gtas-parent/gtas-commons/secrets
           aws sts get-caller-identity
       # -f docker-compose.yml -f neo4j-etl-docker-compose.yml -f pipeline-deployment.yaml convert --out deploy.yaml
       # - uses: azure/k8s-bake@v1
