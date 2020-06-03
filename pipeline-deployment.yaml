@@ -92,7 +92,7 @@ services:
         constraints:
           - node.labels.role == node-b
     volumes:
-      - ./gtas-parent/gtas-commons/secrets:/run/secrets
+      - ./gtas-parent/gtas-commons/secrets/logstash-keystore-password:/run/secrets/logstash-keystore-password
   # neo4j:
   #   deploy:
   #     labels:
