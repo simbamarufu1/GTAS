@@ -70,33 +70,33 @@ services:
       - logstash-conf:/logstash-conf
       - kibana-conf:/kibana-conf
       - elasticsearch-conf:/elasticsearch-conf
-    secrets:
-      - logstash-keystore-password
-      - mysql-logstash-user
-      - mysql-logstash-password
-      - elastic-password
-      - elasticsearch-kibana-user
-      - elasticsearch-kibana-password
-      - elastic-bootstrap-password
+    # secrets:
+    #   - logstash-keystore-password
+    #   - mysql-logstash-user
+    #   - mysql-logstash-password
+    #   - elastic-password
+    #   - elasticsearch-kibana-user
+    #   - elasticsearch-kibana-password
+    #   - elastic-bootstrap-password
     networks:
       - gtas-webapp-network
 
 
 secrets:
   logstash-keystore-password:
-    file: ./gtas-parent/gtas-commons/secrets/logstash_keystore_password.txt
+    file: ./gtas-parent/gtas-commons/secrets/logstash-keystore-password
   mysql-logstash-user:
-    file: ./gtas-parent/gtas-commons/secrets/mysql_logstash_user.txt
+    file: ./gtas-parent/gtas-commons/secrets/mysql-logstash-user
   mysql-logstash-password:
-    file: ./gtas-parent/gtas-commons/secrets/mysql_logstash_password.txt
+    file: ./gtas-parent/gtas-commons/secrets/mysql-logstash-password
   elastic-password:
-    file: ./gtas-parent/gtas-commons/secrets/elastic_password.txt
+    file: ./gtas-parent/gtas-commons/secrets/elastic-password
   elasticsearch-kibana-user:
-    file: ./gtas-parent/gtas-commons/secrets/elasticsearch_kibana_user.txt
+    file: ./gtas-parent/gtas-commons/secrets/elasticsearch-kibana-user
   elasticsearch-kibana-password:
-    file: ./gtas-parent/gtas-commons/secrets/elasticsearch_kibana_password.txt
+    file: ./gtas-parent/gtas-commons/secrets/elasticsearch-kibana-password
   elastic-bootstrap-password:
-    file: ./gtas-parent/gtas-commons/secrets/elastic_bootstrap_password.txt
+    file: ./gtas-parent/gtas-commons/secrets/elastic-bootstrap-password
 
 volumes:
   logstash-conf:
