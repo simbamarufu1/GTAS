@@ -71,7 +71,7 @@ services:
       - logstash-conf:/logstash-conf
       - kibana-conf:/kibana-conf
       - elasticsearch-conf:/elasticsearch-conf
-      - type: bind
+      - type: volume
         source: ./gtas-parent/gtas-commons/secrets
         target: /mnt/secrets
         consistency: consistent
