@@ -91,14 +91,6 @@ services:
       placement:
         constraints:
           - node.labels.role == node-b
-    volumes:
-      - ${PWD}/gtas-parent/gtas-commons/secrets/logstash_keystore_password.txt:/run/secrets/logstash-keystore-password
-      - ${PWD}/gtas-parent/gtas-commons/secrets/mysql_logstash_user.txt:/run/secrets/mysql-logstash-user
-      - ${PWD}/gtas-parent/gtas-commons/secrets/mysql_logstash_password.txt:/run/secrets/mysql-logstash-password
-      - ${PWD}/gtas-parent/gtas-commons/secrets/elastic_password.txt:/run/secrets/elastic-password
-      - ${PWD}/gtas-parent/gtas-commons/secrets/elasticsearch_kibana_user.txt:/run/secrets/elasticsearch-kibana-user
-      - ${PWD}/gtas-parent/gtas-commons/secrets/elasticsearch_kibana_password.txt:/run/secrets/elasticsearch-kibana-password
-      - ${PWD}/gtas-parent/gtas-commons/secrets/elastic_bootstrap_password.txt:/run/secrets/elastic-bootstrap-password
   # neo4j:
   #   deploy:
   #     labels:

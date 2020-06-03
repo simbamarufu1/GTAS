@@ -70,14 +70,14 @@ services:
       - logstash-conf:/logstash-conf
       - kibana-conf:/kibana-conf
       - elasticsearch-conf:/elasticsearch-conf
-    # secrets:
-    #   - logstash-keystore-password
-    #   - mysql-logstash-user
-    #   - mysql-logstash-password
-    #   - elastic-password
-    #   - elasticsearch-kibana-user
-    #   - elasticsearch-kibana-password
-    #   - elastic-bootstrap-password
+    secrets:
+      - logstash-keystore-password
+      - mysql-logstash-user
+      - mysql-logstash-password
+      - elastic-password
+      - elasticsearch-kibana-user
+      - elasticsearch-kibana-password
+      - elastic-bootstrap-password
     networks:
       - gtas-webapp-network
 
