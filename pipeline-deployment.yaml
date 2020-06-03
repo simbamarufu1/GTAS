@@ -92,7 +92,7 @@ services:
         constraints:
           - node.labels.role == node-b
     environment:
-      dir: "mnt"
+      dir: 'mnt'
     volumes:
       - ./gtas-parent/gtas-commons/secrets:/mnt/secrets
   # neo4j:
