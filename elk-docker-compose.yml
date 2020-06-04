@@ -66,23 +66,24 @@ services:
     environment:
       KIBANA_HOST: 'kibana'
       ELASTICSEARCH_HOST: 'elasticsearch'
-      SECRET_PATH: 'mnt' 
+      LOGSTASH_PASSWORD_PATH: '/run/secrets/logstash-keystore-password/logstash-keystore-password' 
+      MYSQL_USER_PATH: '/run/secrets/mysql-logstash-user/mysql-logstash-user'
+      MYSQL_PASSWORD_PATH: '/run/secrets/mysql-logstash-password/mysql-logstash-password'
+      KIBANA_PASSWORD_PATH: '/run/secrets/elasticsearch-kibana-password/elasticsearch-kibana-password'
+      BOOTSTRAP_PATH: '/run/secrets/elastic-bootstrap-password/elastic-bootstrap-password'
+      ELASTIC_PATH: '/run/secrets/elastic-password/elastic-password'
     volumes:
       - logstash-conf:/logstash-conf
       - kibana-conf:/kibana-conf
       - elasticsearch-conf:/elasticsearch-conf
-      - type: volume
-        source: ./gtas-parent/gtas-commons/secrets
-        target: /mnt/secrets
-        consistency: consistent
-    # secrets:
-    #   - logstash-keystore-password
-    #   - mysql-logstash-user
-    #   - mysql-logstash-password
-    #   - elastic-password
-    #   - elasticsearch-kibana-user
-    #   - elasticsearch-kibana-password
-    #   - elastic-bootstrap-password
+    secrets:
+      - logstash-keystore-password
+      - mysql-logstash-user
+      - mysql-logstash-password
+      - elastic-password
+      - elasticsearch-kibana-user
+      - elasticsearch-kibana-password
+      - elastic-bootstrap-password
     networks:
       - gtas-webapp-network
 
